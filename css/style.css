@@ -1,0 +1,80 @@
+:root {
+  --pico-font-size: 85%;
+}
+/* Fixes misalignment in FireFox */
+.dropdown {
+  margin: 0 !important;
+}
+.first-col {
+  width: 12.5rem;
+}
+.first-two-col {
+  width: 19rem;
+}
+@media (min-width: 1280px) {
+  .first-col {
+    width: 25rem;
+  }
+  .first-two-col {
+    width: 31.5rem;
+  }
+}
+.second-col {
+  width: 6.5rem;
+}
+.second-col input {
+  width: 4rem;
+}
+.last-col {
+  width: 4.5rem;
+  border: 0;
+}
+.shrink {
+  --pico-spacing: 0.5rem;
+  table-layout: fixed;
+}
+.shrink input,
+.shrink select,
+.shrink button {
+  --pico-form-element-spacing-vertical: 0.25rem;
+  --pico-form-element-spacing-horizontal: 0.25rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+}
+.shrink select {
+  padding-right: calc(var(--pico-form-element-spacing-horizontal) + 1.25rem);
+  padding-inline-end: calc(var(--pico-form-element-spacing-horizontal) + 1.25rem);
+  background-position: center right 0.25rem;
+}
+.slim {
+  font-weight: 400;
+}
+@media (max-width: 1279px) {
+  #opt-ranges td {
+    font-size: 0.875em;
+  }
+}
+#water-modal select,
+#water-modal input[type="text"] {
+  width: 50%;
+}
+#checklist-modal select {
+  margin-bottom: 0;
+}
+.checked-off span {
+  color: var(--pico-muted-color);
+  text-decoration: line-through;
+}
+#refs {
+  counter-reset: list;
+}
+#refs > li {
+  list-style: none;
+}
+#refs > li:before {
+  content: "[" counter(list) "] ";
+  counter-increment: list;
+}
+footer p {
+  color: var(--pico-muted-color);
+}
