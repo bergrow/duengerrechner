@@ -60,8 +60,9 @@ const addFertilizer = (data) => {
   addFertilizerDropdownOption(new Option(data.name, id));
 };
 
-const addFertilizerDropdownOption = (option) =>
-  document.querySelectorAll("[name=fertilizer]").forEach((select) => select.add(option));
+const addFertilizerDropdownOption = (option) => {
+  document.querySelectorAll("select[name=fertilizer]").forEach((select) => select.appendChild(option));
+};
 
 const addFertRow = (numRows = 1) => {
   const rowButtons = document.querySelector("#fertilizer-row-buttons");
