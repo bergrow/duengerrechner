@@ -61,7 +61,7 @@ const addFertilizer = (data) => {
 };
 
 const addFertilizerDropdownOption = (option) => {
-  document.querySelectorAll("select[name=fertilizer]").forEach((select) => select.appendChild(option));
+  document.querySelectorAll("select[name=fertilizer]").forEach((select) => select.appendChild(option.cloneNode(true)));
 };
 
 const addFertRow = (numRows = 1) => {
