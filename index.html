@@ -35,6 +35,18 @@
           </li>
         </ul>
         <ul>
+          <li><a href="#" class="contrast">Düngerrechner</a></li>
+          <li><a href="#" class="contrast">Gießprotokoll</a></li>
+          <li>
+            <details class="dropdown">
+              <summary role="button" class="contrast outline">Einstellungen</summary>
+              <ul>
+                <li><a href="#" data-target="new-fert-modal" onclick="toggleModal(event)">Neuer Dünger</a></li>
+                <li><a href="#" data-target="water-modal" onclick="toggleModal(event)">Wasserwerte</a></li>
+                <li><a href="#" data-target="reset-modal" onclick="toggleModal(event)">Daten löschen</a></li>
+              </ul>
+            </details>
+          </li>
           <li>
             <button
               id="toggle-theme-button"
@@ -72,21 +84,11 @@
               </svg>
             </button>
           </li>
-          <li>
-            <details class="dropdown">
-              <summary role="button" class="contrast outline">Einstellungen</summary>
-              <ul>
-                <li><a href="#" data-target="new-fert-modal" onclick="toggleModal(event)">Neuer Dünger</a></li>
-                <li><a href="#" data-target="water-modal" onclick="toggleModal(event)">Wasserwerte</a></li>
-                <li><a href="#" data-target="reset-modal" onclick="toggleModal(event)">Daten löschen</a></li>
-              </ul>
-            </details>
-          </li>
         </ul>
       </nav>
     </header>
     <main class="container">
-      <section>
+      <section id="fertilizer-table-section">
         <table id="fertilizer-table" class="shrink">
           <thead>
             <tr>
@@ -156,8 +158,6 @@
             </tr>
           </tbody>
         </table>
-      </section>
-      <section>
         <table id="water-table" class="shrink">
           <thead>
             <tr>
@@ -291,8 +291,35 @@
             </tr>
           </tbody>
         </table>
+        <button type="button" data-target="checklist-modal" onclick="toggleModal(event)">
+          Gießcheckliste anzeigen
+        </button>
       </section>
-      <button type="button" data-target="checklist-modal" onclick="toggleModal(event)">Gießcheckliste anzeigen</button>
+
+      <section id="fertigation-protocol-section">
+        <table id="fertigation-protocol">
+          <thead>
+            <tr>
+              <th scope="col">Datum / Uhrzeit</th>
+              <th scope="col">Menge</th>
+              <th scope="col">pH</th>
+              <th scope="col">EC</th>
+              <th scope="col">Wasser verdünnt</th>
+              <th scope="col">Dünger</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
       <dialog id="new-fert-modal">
         <article>
           <header>
@@ -496,19 +523,31 @@
             <button aria-label="Close" rel="prev" data-target="checklist-modal" onclick="toggleModal(event)"></button>
             <h3>📝 Gießcheckliste</h3>
           </header>
-          <label style="width: 25%">
-            <b>Gießmenge</b><br />
-            <input
-              type="number"
-              name="checklist-multiplier"
-              min="0.1"
-              step="0.1"
-              style="width: 80%"
-              value="1"
-              oninput="updateChecklistMultiplier(event)"
-            />
-            Liter
-          </label>
+          <div class="grid">
+            <label>
+              <b>Gießmenge</b><br />
+              <input
+                type="number"
+                name="checklist-multiplier"
+                min="0.1"
+                step="0.1"
+                style="width: 5rem"
+                value="1"
+                oninput="updateChecklistMultiplier(event)"
+              />
+              Liter, zu <span></span>&nbsp;% verdünnt
+            </label>
+            <div class="grid">
+              <label>
+                <b>pH-Wert</b><br />
+                <input type="number" name="ph" min="0.1" step="0.1" style="width: 5rem" value="6.5" />
+              </label>
+              <label>
+                <b>EC-Wert</b><br />
+                <input type="number" name="ec" min="0.1" step="0.1" style="width: 5rem" value="0" /> mS
+              </label>
+            </div>
+          </div>
           <table id="checklist-table">
             <thead>
               <tr>
@@ -537,6 +576,9 @@
             </tbody>
           </table>
           <footer>
+            <button id="transferToProtocolBtn" class="outline secondary" onclick="addToFertigationProtocol(event)">
+              In Gießprotokoll übertragen
+            </button>
             <button data-target="checklist-modal" onclick="toggleModal(event)">Fertig</button>
           </footer>
         </article>
@@ -545,12 +587,11 @@
         <article>
           <h3>🗑️ Gespeicherte Daten löschen</h3>
           <p>
-            Hierbei werden alle eingegebenen Daten, gespeicherte Wasserwerte und selbst angelegte Dünger unwiderruflich
-            gelöscht.
+            Hierbei werden gespeicherte Wasserwerte und alle selbst angelegte Dünger unwiderruflich gelöscht. Das
+            Gießprotokoll bleibt erhalten.
           </p>
           <p><b>Möchtest du fortfahren?</b></p>
           <footer>
-            <button data-target="reset-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
             <button data-target="reset-modal" onclick="resetCalculator(event)">Löschen</button>
           </footer>
         </article>
