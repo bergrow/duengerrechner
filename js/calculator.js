@@ -276,15 +276,39 @@ const updateChecklistRow = (row, fromRow) => {
   uSpan.textContent = quality === 1 ? uSpan.dataset.original : "ml";
 };
 
+const updateChecklistMultiplier = (event) =>
+  document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
+
+const addToFertigationProtocol = (event) => {
+  const fertilizers = Array.from(document.querySelectorAll("#checklist-table tbody tr")).map((row) => {
+    const rqs = (q) => row.querySelector(q).textContent;
+    return {
+      name: rqs("span[name=name]"),
+      quality: rqs("select[name=quality] option:checked"),
+      quantity: `${rqs("span[name=quantity]")} ${rqs("span[name=u]")}`,
+    };
+  });
+
+  const inputValue = (name) => document.querySelector(`#checklist-modal input[name=${name}]`).value;
+  const data = {
+    date: new Date(),
+    quantity: inputValue("checklist-multiplier"),
+    ph: inputValue("ph"),
+    ec: `${inputValue("ec")} mS`,
+    fertilizers: fertilizers,
+    waterDilution: `${document.querySelector("#water-table input[name=dilution]").value} %`,
+  };
+
+  const fertigationProtocol = JSON.parse(localStorage.getItem("fertigationProtocol")) || [];
+  fertigationProtocol.push(data);
+  localStorage.setItem("fertigationProtocol", JSON.stringify(fertigationProtocol));
+};
+
 // Reset Modal
 const resetCalculator = (event) => {
   localStorage.removeItem("waterData");
   localStorage.removeItem("customFertData");
   location.reload();
-};
-
-const updateChecklistMultiplier = (event) => {
-  document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
 };
 
 // Table functions
