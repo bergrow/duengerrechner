@@ -115,13 +115,15 @@ const updateWaterRow = (row) => {
 };
 
 const updateSums = () => {
-  ["n", "p", "k", "ca", "mg", "s", "b", "cu", "fe", "mn", "mo", "zn"].forEach((name) => {
-    let value = Array.from(
-      document.querySelectorAll(`span[name=${name}]`),
-      (node) => parseFloat(node.dataset.value) || 0
-    ).reduce((a, c) => a + c, 0);
-    document.querySelector(`#${name}-sum`).textContent = formatValue(value, decimals(name));
-  });
+  ["n", "n-no3", "n-nh4", "n-nu", "n-org", "p", "k", "ca", "mg", "s", "b", "cu", "fe", "mn", "mo", "zn"].forEach(
+    (name) => {
+      let value = Array.from(
+        document.querySelectorAll(`span[name=${name}]`),
+        (node) => parseFloat(node.dataset.value) || 0
+      ).reduce((a, c) => a + c, 0);
+      document.querySelector(`#${name}-sum`).textContent = formatValue(value, decimals(name));
+    }
+  );
 };
 
 const changeOptRanges = () => {
@@ -130,6 +132,28 @@ const changeOptRanges = () => {
   optRangeTbl.querySelectorAll("td[data-stage]").forEach((td) => {
     td.dataset.stage === selected ? td.removeAttribute("style") : (td.style = "display: none");
   });
+};
+
+const showMicros = (event) => {
+  document.querySelectorAll(".macro").forEach((elem) => elem.classList.add("hidden"));
+  document.querySelectorAll(".micro").forEach((elem) => elem.classList.remove("hidden"));
+  toggleScrollButtons(event);
+};
+
+const showMacros = (event) => {
+  document.querySelectorAll(".macro").forEach((elem) => elem.classList.remove("hidden"));
+  document.querySelectorAll(".micro").forEach((elem) => elem.classList.add("hidden"));
+  toggleScrollButtons(event);
+};
+
+const toggleScrollButtons = (event) => {
+  const {
+    currentTarget: activeButton,
+    currentTarget: { parentNode: scrollButtons },
+  } = event;
+  const disabledButton = scrollButtons.querySelector("button[disabled]");
+  activeButton.disabled = true;
+  disabledButton.disabled = false;
 };
 
 // New Fertilizer Modal
@@ -286,7 +310,7 @@ const delimiter = () => {
   delimiter.disabled = true;
   return delimiter;
 };
-const decimals = (name) => ("npkcamgsghkh".match(name) ? 1 : 2);
+const decimals = (name) => ("n-no3n-nh4n-nun-orgpkcamgsghkh".match(name) ? 1 : 2);
 const formatValue = (value, decimals) => {
   const formattingSettings = { maximumFractionDigits: decimals, minimumFractionDigits: decimals };
   return value && value !== 0 ? value.toLocaleString(undefined, formattingSettings) : "-";

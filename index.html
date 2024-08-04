@@ -60,25 +60,32 @@
             <tr>
               <td class="first-col"></td>
               <td class="second-col"></td>
-              <th scope="col" colspan=6>MAKRO</th>
-              <th scope="col" colspan=6>MIKRO</th>
-              <td class="last-col"></td>
+              <th class="macro" scope="col" colspan=10>MAKRO</th>
+              <th class="micro hidden" scope="col" colspan=6>MIKRO</th>
+              <td id="scroll-buttons" class="last-col">
+                <button class="outline" onclick="showMacros(event)" disabled>◀</button>
+                <button class="outline" onclick="showMicros(event)">▶</button>
+              </td>
             </tr>
             <tr>
               <th scope="col">Dünger</th>
               <th scope="col">Dosierung</th>
-              <th scope="col">N</th>
-              <th scope="col">P</th>
-              <th scope="col">K</th>
-              <th scope="col">Ca</th>
-              <th scope="col">Mg</th>
-              <th scope="col">S</th>
-              <th scope="col">B</th>
-              <th scope="col">Cu</th>
-              <th scope="col">Fe</th>
-              <th scope="col">Mn</th>
-              <th scope="col">Mo</th>
-              <th scope="col">Zn</th>
+              <th class="macro" scope="col">N</th>
+              <th class="macro slim" scope="col">N-NO3</th>
+              <th class="macro slim" scope="col">N-NH4</th>
+              <th class="macro slim" scope="col">N-NU</th>
+              <th class="macro slim" scope="col">N-org</th>
+              <th class="macro" scope="col">P</th>
+              <th class="macro" scope="col">K</th>
+              <th class="macro" scope="col">Ca</th>
+              <th class="macro" scope="col">Mg</th>
+              <th class="macro" scope="col">S</th>
+              <th class="micro hidden" scope="col">B</th>
+              <th class="micro hidden" scope="col">Cu</th>
+              <th class="micro hidden" scope="col">Fe</th>
+              <th class="micro hidden" scope="col">Mn</th>
+              <th class="micro hidden" scope="col">Mo</th>
+              <th class="micro hidden" scope="col">Zn</th>
             </tr>
           </thead>
           <tbody>
@@ -89,34 +96,38 @@
                 </select>
               </td>
               <td class="second-col"><input type="number" name="dose" aria-label="Dosierung" step=".1" min="0"> <span name="u"></span></td>
-              <td><span name="n" data-value="0"></span></td>
-              <td><span name="p" data-value="0"></span></td>
-              <td><span name="k" data-value="0"></span></td>
-              <td><span name="ca" data-value="0"></span></td>
-              <td><span name="mg" data-value="0"></span></td>
-              <td><span name="s" data-value="0"></span></td>
-              <td><span name="b" data-value="0"></span></td>
-              <td><span name="cu" data-value="0"></span></td>
-              <td><span name="fe" data-value="0"></span></td>
-              <td><span name="mn" data-value="0"></span></td>
-              <td><span name="mo" data-value="0"></span></td>
-              <td><span name="zn" data-value="0"></span></td>
+              <td class="macro"><span name="n" data-value="0"></span></td>
+              <td class="macro"><span name="n-no3" data-value="0"></span></td>
+              <td class="macro"><span name="n-nh4" data-value="0"></span></td>
+              <td class="macro"><span name="n-nu" data-value="0"></span></td>
+              <td class="macro"><span name="n-org" data-value="0"></span></td>
+              <td class="macro"><span name="p" data-value="0"></span></td>
+              <td class="macro"><span name="k" data-value="0"></span></td>
+              <td class="macro"><span name="ca" data-value="0"></span></td>
+              <td class="macro"><span name="mg" data-value="0"></span></td>
+              <td class="macro"><span name="s" data-value="0"></span></td>
+              <td class="micro hidden"><span name="b" data-value="0"></span></td>
+              <td class="micro hidden"><span name="cu" data-value="0"></span></td>
+              <td class="micro hidden"><span name="fe" data-value="0"></span></td>
+              <td class="micro hidden"><span name="mn" data-value="0"></span></td>
+              <td class="micro hidden"><span name="mo" data-value="0"></span></td>
+              <td class="micro hidden"><span name="zn" data-value="0"></span></td>
               <td id="fertilizer-row-buttons" class="last-col">
-                <button class="outline" onclick="addFertRow()"> + </button>
-                <button class="secondary outline" onclick="removeFertRow()" disabled> - </button>
+                <button class="outline" onclick="addFertRow()">+</button>
+                <button class="secondary outline" onclick="removeFertRow()" disabled>-</button>
               </td>
             </tr>
           </tbody>
         </table>
       </section>
-
       <section>
         <table id="water-table" class="shrink">
           <thead>
             <tr>
               <th scope="col" class="first-col">Wasser</th>
               <th scope="col" class="second-col">verdünnt</th>
-              <td colspan="12"></td>
+              <td class="macro" colspan="10"></td>
+              <td class="micro hidden" colspan="6"></td>
               <td class="last-col"></td>
             </tr>
           </thead>
@@ -124,32 +135,36 @@
             <tr data-type="water" id="water-row">
               <td>Leitungswasser</td>
               <td class="second-col"><input type="number" name="dilution" aria-label="Verdünnung in %" step="5" min="0" max="100" value="0"/> %</td>
-              <td><span name="n" data-value="0"></span></td>
-              <td><span name="p" data-value="0"></span></td>
-              <td><span name="k" data-value="0"></span></td>
-              <td><span name="ca" data-value="0"></span></td>
-              <td><span name="mg" data-value="0"></span></td>
-              <td><span name="s" data-value="0"></span></td>
-              <td colspan="3"><b>Gesamthärte: </b><span name="gh" data-value="0">-</span> °dH</td>
-              <td colspan="3"><b>Karbonathärte: </b><span name="kh" data-value="0">-</span> °dH</td>
+              <td class="macro" colspan="5"><span name="n" data-value="0"></span></td>
+              <td class="macro"><span name="p" data-value="0"></span></td>
+              <td class="macro"><span name="k" data-value="0"></span></td>
+              <td class="macro"><span name="ca" data-value="0"></span></td>
+              <td class="macro"><span name="mg" data-value="0"></span></td>
+              <td class="macro"><span name="s" data-value="0"></span></td>
+              <td class="micro hidden" colspan="3"><b>Gesamthärte: </b><span name="gh" data-value="0">-</span> °dH</td>
+              <td class="micro hidden" colspan="3"><b>Karbonathärte: </b><span name="kh" data-value="0">-</span> °dH</td>
               <td class="last-col"></td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <th scope="row" colspan="2">Summe <span class="slim">(mg/l)</span></th>
-              <td><span id="n-sum"></span></td>
-              <td><span id="p-sum"></span></td>
-              <td><span id="k-sum"></span></td>
-              <td><span id="ca-sum"></span></td>
-              <td><span id="mg-sum"></span></td>
-              <td><span id="s-sum"></span></td>
-              <td><span id="b-sum"></span></td>
-              <td><span id="cu-sum"></span></td>
-              <td><span id="fe-sum"></span></td>
-              <td><span id="mn-sum"></span></td>
-              <td><span id="mo-sum"></span></td>
-              <td><span id="zn-sum"></span></td>
+              <td class="macro"><span id="n-sum"></span></td>
+              <td class="macro"><span id="n-no3-sum"></span></td>
+              <td class="macro"><span id="n-nh4-sum"></span></td>
+              <td class="macro"><span id="n-nu-sum"></span></td>
+              <td class="macro"><span id="n-org-sum"></span></td>
+              <td class="macro"><span id="p-sum"></span></td>
+              <td class="macro"><span id="k-sum"></span></td>
+              <td class="macro"><span id="ca-sum"></span></td>
+              <td class="macro"><span id="mg-sum"></span></td>
+              <td class="macro"><span id="s-sum"></span></td>
+              <td class="micro hidden"><span id="b-sum"></span></td>
+              <td class="micro hidden"><span id="cu-sum"></span></td>
+              <td class="micro hidden"><span id="fe-sum"></span></td>
+              <td class="micro hidden"><span id="mn-sum"></span></td>
+              <td class="micro hidden"><span id="mo-sum"></span></td>
+              <td class="micro hidden"><span id="zn-sum"></span></td>
               <td class="last-col"></td>
             </tr>
           </tfoot>
@@ -164,24 +179,24 @@
                   <option value="gen">generativen</option>
                 </select> Phase
               </th>
-              <td data-stage="veg"><em data-tooltip="Quellen: [1], [7]">160 - 230</em></td>
-              <td data-stage="veg"><em data-tooltip="Quellen: [3], [7], [8], [12], [14]">15 -&nbsp; 40</em></td>
-              <td data-stage="veg"><em data-tooltip="Quellen: [5], [7]">60 - 200</em></td>
-              <td data-stage="veg"><em data-tooltip="Quellen: [1], [3], [5], [7]; abh. von K- und Mg-Konzentrationen">45 - 180</em></td>
-              <td data-stage="veg"><em data-tooltip="Quellen: [7], [10], [13]; abh. von K- und Ca-Konzentrationen">35 - 75</em></td>
-              <td data-stage="veg"><em data-tooltip="Quellen: [1], [3], [7], [12]">47 - 89</em></td>
-              <td data-stage="gen"><em data-tooltip="Quellen: [2], [7], [9]">160 - 230</em></td>
-              <td data-stage="gen"><em data-tooltip="Quellen: [4], [7], [8], [9], [11], [12], [14]">25 -&nbsp; 90</em></td>
-              <td data-stage="gen"><em data-tooltip="Quellen: [6], [7], [11]">60 - 200</em></td>
-              <td data-stage="gen"><em data-tooltip="Quellen: [4], [7], [9], [12]; abh. von K- und Mg-Konzentrationen">45 - 190</em></td>
-              <td data-stage="gen"><em data-tooltip="Quellen: [7], [10]; abh. von K- und Ca-Konzentrationen">35 - 75</em></td>
-              <td data-stage="gen"><em data-tooltip="Quellen: [2], [4], [7], [9]">47 - 180</em></td>
-              <td>0,1 - 0,5</td>
-              <td>0,02 - 0,19</td>
-              <td>1,2 - 4,0</td>
-              <td>0,6 - 1,0</td>
-              <td>0,01 - 0,03</td>
-              <td>0,12 - 0,4</td>
+              <td class="macro centered" colspan="5" data-stage="veg"><em data-tooltip="Quellen: [1], [7]">160 - 230</em></td>
+              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [3], [7], [8], [12], [14]">15 -&nbsp; 40</em></td>
+              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [5], [7]">60 - 200</em></td>
+              <td class="macro"data-stage="veg"><em data-tooltip="Quellen: [1], [3], [5], [7]; abh. von K- und Mg-Konzentrationen">45 - 180</em></td>
+              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [7], [10], [13]; abh. von K- und Ca-Konzentrationen">35 - 75</em></td>
+              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [1], [3], [7], [12]">47 - 89</em></td>
+              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [2], [7], [9]">160 - 230</em></td>
+              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [4], [7], [8], [9], [11], [12], [14]">25 -&nbsp; 90</em></td>
+              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [6], [7], [11]">60 - 200</em></td>
+              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [4], [7], [9], [12]; abh. von K- und Mg-Konzentrationen">45 - 190</em></td>
+              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [7], [10]; abh. von K- und Ca-Konzentrationen">35 - 75</em></td>
+              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [2], [4], [7], [9]">47 - 180</em></td>
+              <td class="micro hidden">0,1 - 0,5</td>
+              <td class="micro hidden">0,02 - 0,19</td>
+              <td class="micro hidden">1,2 - 4,0</td>
+              <td class="micro hidden">0,6 - 1,0</td>
+              <td class="micro hidden">0,01 - 0,03</td>
+              <td class="micro hidden">0,12 - 0,4</td>
               <td class="last-col"></td>
             </tr>
           </tbody>
@@ -397,7 +412,6 @@
           </footer>
         </article>
       </dialog>
-
       <dialog id="reset-modal">
         <article>
           <h3>🗑️ Gespeicherte Daten löschen</h3>
