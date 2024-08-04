@@ -28,6 +28,11 @@
 .last-col {
   width: 4.5rem;
   border: 0;
+  text-align: center;
+}
+.last-col button {
+  border-width: 0.0625rem;
+  min-width: 20px;
 }
 .shrink {
   --pico-spacing: 0.5rem;
@@ -48,6 +53,12 @@
 }
 .slim {
   font-weight: 400;
+}
+.centered {
+  text-align: center;
+}
+.hidden {
+  display: none;
 }
 @media (max-width: 1279px) {
   #opt-ranges td {
