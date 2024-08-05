@@ -34,8 +34,6 @@ const init = () => {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
     if (!document.documentElement.dataset.theme) toggleThemeButton.classList.toggle("theme-toggle--toggled");
   });
-
-  changeOptRanges();
 };
 
 const toggleTheme = (event) => {
@@ -115,24 +113,23 @@ const updateWaterRow = (row) => {
 };
 
 const updateSums = () => {
+  let n;
   ["n", "n-no3", "n-nh4", "n-nu", "n-org", "p", "k", "ca", "mg", "s", "b", "cu", "fe", "mn", "mo", "zn"].forEach(
     (name) => {
       let value = Array.from(
         document.querySelectorAll(`span[name=${name}]`),
-        (node) => parseFloat(node.dataset.value) || 0
+        (elem) => parseFloat(elem.dataset.value) || 0
       ).reduce((a, c) => a + c, 0);
-      document.querySelector(`#${name}-sum`).textContent = formatValue(value, decimals(name));
+      if (name === "n") n = value;
+      document.querySelector(`#${name}-sum`).textContent = ["n-no3", "n-nh4", "n-nu", "n-org"].includes(name)
+        ? `${formatValue((value / n) * 100, 0)} %`
+        : formatValue(value, decimals(name));
     }
   );
 };
 
-const changeOptRanges = () => {
-  const optRangeTbl = document.querySelector("#opt-ranges");
-  const selected = optRangeTbl.querySelector("select[name=stage]").selectedOptions[0].value;
-  optRangeTbl.querySelectorAll("td[data-stage]").forEach((td) => {
-    td.dataset.stage === selected ? td.removeAttribute("style") : (td.style = "display: none");
-  });
-};
+const changeOptRanges = () =>
+  document.querySelectorAll("#opt-ranges em[data-stage]").forEach((em) => em.classList.toggle("hidden"));
 
 const showMicros = (event) => {
   document.querySelectorAll(".macro").forEach((elem) => elem.classList.add("hidden"));
@@ -141,7 +138,7 @@ const showMicros = (event) => {
 };
 
 const showMacros = (event) => {
-  document.querySelectorAll(".macro").forEach((elem) => elem.classList.remove("hidden"));
+  document.querySelectorAll(".macro:not(.n-form)").forEach((elem) => elem.classList.remove("hidden"));
   document.querySelectorAll(".micro").forEach((elem) => elem.classList.add("hidden"));
   toggleScrollButtons(event);
 };
@@ -154,6 +151,11 @@ const toggleScrollButtons = (event) => {
   const disabledButton = scrollButtons.querySelector("button[disabled]");
   activeButton.disabled = true;
   disabledButton.disabled = false;
+};
+
+const toggleNForm = (event) => {
+  document.querySelectorAll(".n-form").forEach((elem) => elem.classList.toggle("hidden"));
+  event.currentTarget.toggleAttribute("toggled");
 };
 
 // New Fertilizer Modal
