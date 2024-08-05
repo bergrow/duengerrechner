@@ -1,17 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
-    <meta property="og:description" content="Das 'Schweizer Taschenmesser' für deine Cannabis-Düngung, mit über 150 Düngern in der Datenbank, Berücksichtigung deiner individuellen Wasserwerte und basierend auf aktuellen wissenschaftlichen Erkenntnissen zur Cannabiszucht.">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/classic.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      property="og:description"
+      content="Das 'Schweizer Taschenmesser' für deine Cannabis-Düngung, mit über 150 Düngern in der Datenbank, Berücksichtigung deiner individuellen Wasserwerte und basierend auf aktuellen wissenschaftlichen Erkenntnissen zur Cannabiszucht."
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="assets/favicon/site.webmanifest" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/classic.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="js/modal.js"></script>
     <script src="js/fertilizers.js"></script>
     <script src="js/calculator.js"></script>
@@ -21,23 +24,52 @@
     <header class="main-header container">
       <nav>
         <ul>
-          <li><img width="50" src="assets/images/icon.png">
-          </li>
+          <li><img width="50" src="assets/images/icon.png" /></li>
         </ul>
         <ul>
           <li>
             <hgroup>
               <h1>bergrows Düngerrechner</h1>
-              <p>
-                Version 2.4.1 <small>(2024-08-04)</small>
-              </p>
+              <p>Version 2.4.1 <small>(2024-08-04)</small></p>
             </hgroup>
           </li>
         </ul>
         <ul>
           <li>
-            <button id="toggle-theme-button" class="contrast outline theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme">
-              <svg aria-hidden=true class=theme-toggle__classic fill=currentColor height=1em stroke-linecap=round viewBox="0 0 32 32"width=1em xmlns=http://www.w3.org/2000/svg><clipPath id=theme-toggle__classic__cutout><path d="M0-5h30a1 1 0 0 0 9 13v24H0Z"/></clipPath><g clip-path=url(#theme-toggle__classic__cutout)><circle cx=16 cy=16 r=9.34 /><g stroke=currentColor stroke-width=1.5><path d="M16 5.5v-4"/><path d="M16 30.5v-4"/><path d="M1.5 16h4"/><path d="M26.5 16h4"/><path d="m23.4 8.6 2.8-2.8"/><path d="m5.7 26.3 2.9-2.9"/><path d="m5.8 5.8 2.8 2.8"/><path d="m23.4 23.4 2.9 2.9"/></g></g></svg>
+            <button
+              id="toggle-theme-button"
+              class="contrast outline theme-toggle"
+              type="button"
+              title="Toggle theme"
+              aria-label="Toggle theme"
+            >
+              <svg
+                aria-hidden="true"
+                class="theme-toggle__classic"
+                fill="currentColor"
+                height="1em"
+                stroke-linecap="round"
+                viewBox="0 0 32 32"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <clipPath id="theme-toggle__classic__cutout">
+                  <path d="M0-5h30a1 1 0 0 0 9 13v24H0Z" />
+                </clipPath>
+                <g clip-path="url(#theme-toggle__classic__cutout)">
+                  <circle cx="16" cy="16" r="9.34" />
+                  <g stroke="currentColor" stroke-width="1.5">
+                    <path d="M16 5.5v-4" />
+                    <path d="M16 30.5v-4" />
+                    <path d="M1.5 16h4" />
+                    <path d="M26.5 16h4" />
+                    <path d="m23.4 8.6 2.8-2.8" />
+                    <path d="m5.7 26.3 2.9-2.9" />
+                    <path d="m5.8 5.8 2.8 2.8" />
+                    <path d="m23.4 23.4 2.9 2.9" />
+                  </g>
+                </g>
+              </svg>
             </button>
           </li>
           <li>
@@ -60,21 +92,24 @@
             <tr>
               <td class="first-col"></td>
               <td class="second-col"></td>
-              <th class="macro" scope="col" colspan=10>MAKRO</th>
-              <th class="micro hidden" scope="col" colspan=6>MIKRO</th>
+              <td class="macro" colspan="6"><u>MAKRO</u></td>
+              <td class="macro n-form hidden" colspan="4"></td>
+              <td class="micro hidden" scope="col" colspan="6"><u>MIKRO</u></td>
               <td id="scroll-buttons" class="last-col">
-                <button class="outline" onclick="showMacros(event)" disabled>◀</button>
-                <button class="outline" onclick="showMicros(event)">▶</button>
+                <button class="outline contrast" onclick="showMacros(event)" disabled>◀</button>
+                <button class="outline contrast" onclick="showMicros(event)">▶</button>
               </td>
             </tr>
             <tr>
               <th scope="col">Dünger</th>
               <th scope="col">Dosierung</th>
-              <th class="macro" scope="col">N</th>
-              <th class="macro slim" scope="col">N-NO3</th>
-              <th class="macro slim" scope="col">N-NH4</th>
-              <th class="macro slim" scope="col">N-NU</th>
-              <th class="macro slim" scope="col">N-org</th>
+              <th class="macro slim" scope="col">
+                N<a href="#" class="toggle-button" onclick="toggleNForm(event)">&nbsp;</a>
+              </th>
+              <th class="macro slim n-form hidden" scope="col">N-NO3</th>
+              <th class="macro slim n-form hidden" scope="col">N-NH4</th>
+              <th class="macro slim n-form hidden" scope="col">N-NU</th>
+              <th class="macro slim n-form hidden" scope="col">N-org</th>
               <th class="macro" scope="col">P</th>
               <th class="macro" scope="col">K</th>
               <th class="macro" scope="col">Ca</th>
@@ -95,12 +130,14 @@
                   <option selected disabled value="-1">Dünger auswählen</option>
                 </select>
               </td>
-              <td class="second-col"><input type="number" name="dose" aria-label="Dosierung" step=".1" min="0"> <span name="u"></span></td>
+              <td class="second-col">
+                <input type="number" name="dose" aria-label="Dosierung" step=".1" min="0" /> <span name="u"></span>
+              </td>
               <td class="macro"><span name="n" data-value="0"></span></td>
-              <td class="macro"><span name="n-no3" data-value="0"></span></td>
-              <td class="macro"><span name="n-nh4" data-value="0"></span></td>
-              <td class="macro"><span name="n-nu" data-value="0"></span></td>
-              <td class="macro"><span name="n-org" data-value="0"></span></td>
+              <td class="macro n-form hidden"><span name="n-no3" data-value="0"></span></td>
+              <td class="macro n-form hidden"><span name="n-nh4" data-value="0"></span></td>
+              <td class="macro n-form hidden"><span name="n-nu" data-value="0"></span></td>
+              <td class="macro n-form hidden"><span name="n-org" data-value="0"></span></td>
               <td class="macro"><span name="p" data-value="0"></span></td>
               <td class="macro"><span name="k" data-value="0"></span></td>
               <td class="macro"><span name="ca" data-value="0"></span></td>
@@ -113,8 +150,8 @@
               <td class="micro hidden"><span name="mo" data-value="0"></span></td>
               <td class="micro hidden"><span name="zn" data-value="0"></span></td>
               <td id="fertilizer-row-buttons" class="last-col">
-                <button class="outline" onclick="addFertRow()">+</button>
-                <button class="secondary outline" onclick="removeFertRow()" disabled>-</button>
+                <button class="outline contrast" onclick="addFertRow()">+</button>
+                <button class="outline contrast" onclick="removeFertRow()" disabled>-</button>
               </td>
             </tr>
           </tbody>
@@ -126,7 +163,8 @@
             <tr>
               <th scope="col" class="first-col">Wasser</th>
               <th scope="col" class="second-col">verdünnt</th>
-              <td class="macro" colspan="10"></td>
+              <td class="macro" colspan="6"></td>
+              <td class="macro n-form hidden" colspan="4"></td>
               <td class="micro hidden" colspan="6"></td>
               <td class="last-col"></td>
             </tr>
@@ -134,15 +172,29 @@
           <tbody>
             <tr data-type="water" id="water-row">
               <td>Leitungswasser</td>
-              <td class="second-col"><input type="number" name="dilution" aria-label="Verdünnung in %" step="5" min="0" max="100" value="0"/> %</td>
-              <td class="macro" colspan="5"><span name="n" data-value="0"></span></td>
+              <td class="second-col">
+                <input
+                  type="number"
+                  name="dilution"
+                  aria-label="Verdünnung in %"
+                  step="5"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+                %
+              </td>
+              <td class="macro"><span name="n" data-value="0"></span></td>
+              <td class="macro n-form hidden" colspan="4"></td>
               <td class="macro"><span name="p" data-value="0"></span></td>
               <td class="macro"><span name="k" data-value="0"></span></td>
               <td class="macro"><span name="ca" data-value="0"></span></td>
               <td class="macro"><span name="mg" data-value="0"></span></td>
               <td class="macro"><span name="s" data-value="0"></span></td>
               <td class="micro hidden" colspan="3"><b>Gesamthärte: </b><span name="gh" data-value="0">-</span> °dH</td>
-              <td class="micro hidden" colspan="3"><b>Karbonathärte: </b><span name="kh" data-value="0">-</span> °dH</td>
+              <td class="micro hidden" colspan="3">
+                <b>Karbonathärte: </b><span name="kh" data-value="0">-</span> °dH
+              </td>
               <td class="last-col"></td>
             </tr>
           </tbody>
@@ -150,10 +202,10 @@
             <tr>
               <th scope="row" colspan="2">Summe <span class="slim">(mg/l)</span></th>
               <td class="macro"><span id="n-sum"></span></td>
-              <td class="macro"><span id="n-no3-sum"></span></td>
-              <td class="macro"><span id="n-nh4-sum"></span></td>
-              <td class="macro"><span id="n-nu-sum"></span></td>
-              <td class="macro"><span id="n-org-sum"></span></td>
+              <td class="macro slim n-form hidden"><span id="n-no3-sum"></span></td>
+              <td class="macro slim n-form hidden"><span id="n-nh4-sum"></span></td>
+              <td class="macro slim n-form hidden"><span id="n-nu-sum"></span></td>
+              <td class="macro slim n-form hidden"><span id="n-org-sum"></span></td>
               <td class="macro"><span id="p-sum"></span></td>
               <td class="macro"><span id="k-sum"></span></td>
               <td class="macro"><span id="ca-sum"></span></td>
@@ -170,27 +222,65 @@
           </tfoot>
         </table>
         <table id="opt-ranges" class="shrink">
-          <tbody> 
+          <tbody>
             <tr>
               <th class="first-two-col">
-                Optimale Bereiche für mineralische Düngung in der 
+                Optimale Bereiche für mineralische Düngung in der
                 <select style="width: 7.5rem" name="stage" oninput="changeOptRanges()">
                   <option value="veg">vegetativen</option>
                   <option value="gen">generativen</option>
-                </select> Phase
+                </select>
+                Phase
               </th>
-              <td class="macro centered" colspan="5" data-stage="veg"><em data-tooltip="Quellen: [1], [7]">160 - 230</em></td>
-              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [3], [7], [8], [12], [14]">15 -&nbsp; 40</em></td>
-              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [5], [7]">60 - 200</em></td>
-              <td class="macro"data-stage="veg"><em data-tooltip="Quellen: [1], [3], [5], [7]; abh. von K- und Mg-Konzentrationen">45 - 180</em></td>
-              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [7], [10], [13]; abh. von K- und Ca-Konzentrationen">35 - 75</em></td>
-              <td class="macro" data-stage="veg"><em data-tooltip="Quellen: [1], [3], [7], [12]">47 - 89</em></td>
-              <td class="macro centered" colspan="5" data-stage="gen"><em data-tooltip="Quellen: [2], [7], [9]">160 - 230</em></td>
-              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [4], [7], [8], [9], [11], [12], [14]">25 -&nbsp; 90</em></td>
-              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [6], [7], [11]">60 - 200</em></td>
-              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [4], [7], [9], [12]; abh. von K- und Mg-Konzentrationen">45 - 190</em></td>
-              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [7], [10]; abh. von K- und Ca-Konzentrationen">35 - 75</em></td>
-              <td class="macro" data-stage="gen"><em data-tooltip="Quellen: [2], [4], [7], [9]">47 - 180</em></td>
+              <td class="macro">
+                <em data-stage="veg" data-tooltip="Quellen: [1], [7]">160 - 230</em>
+                <em data-stage="gen" data-tooltip="Quellen: [2], [7], [9]" class="hidden">160 - 230</em>
+              </td>
+              <td class="macro n-form hidden">
+                <em data-tooltip="Quellen: [15]">&gt; 70 %</em>
+              </td>
+              <td class="macro n-form hidden">
+                <em data-tooltip="Quellen: [15]">&lt; 30 %</em>
+              </td>
+              <td class="macro n-form hidden" colspan="2"></td>
+              <td class="macro">
+                <em data-stage="veg" data-tooltip="Quellen: [3], [7], [8], [12], [14]">15 -&nbsp;40</em>
+                <em data-stage="gen" data-tooltip="Quellen: [4], [7], [8], [9], [11], [12], [14]" class="hidden">
+                  25 -&nbsp;90
+                </em>
+              </td>
+              <td class="macro">
+                <em data-stage="veg" data-tooltip="Quellen: [5], [7]">60 - 200</em>
+                <em data-stage="gen" data-tooltip="Quellen: [6], [7], [11]" class="hidden">60 - 200</em>
+              </td>
+              <td class="macro">
+                <em data-stage="veg" data-tooltip="Quellen: [1], [3], [5], [7]; abh. von K- und Mg-Konzentrationen">
+                  45 - 180
+                </em>
+                <em
+                  data-stage="gen"
+                  data-tooltip="Quellen: [4], [7], [9], [12]; abh. von K- und Mg-Konzentrationen"
+                  class="hidden"
+                >
+                  45 - 190
+                </em>
+              </td>
+              <td class="macro">
+                <em data-stage="veg" data-tooltip="Quellen: [7], [10], [13]; abh. von K- und Ca-Konzentrationen">
+                  35 - 75
+                </em>
+                <em
+                  data-stage="gen"
+                  data-tooltip="Quellen: [7], [10]; abh. von K- und Ca-Konzentrationen"
+                  class="hidden"
+                >
+                  35 - 75
+                </em>
+              </td>
+              <td class="macro">
+                <em data-stage="veg" data-tooltip="Quellen: [1], [3], [7], [12]">47 - 89</em>
+                <em data-stage="gen" data-tooltip="Quellen: [2], [4], [7], [9]" class="hidden">47 - 180</em>
+              </td>
               <td class="micro hidden">0,1 - 0,5</td>
               <td class="micro hidden">0,02 - 0,19</td>
               <td class="micro hidden">1,2 - 4,0</td>
@@ -210,39 +300,45 @@
             <h3>📝 Neuen Dünger anlegen</h3>
           </header>
 
-          <form id="new-fert-modal-form"data-target="new-fert-modal" onsubmit="saveNewFertilizerForm(event)">
+          <form id="new-fert-modal-form" data-target="new-fert-modal" onsubmit="saveNewFertilizerForm(event)">
             <fieldset class="grid">
-              <label><b>Name</b>
-                <input name="name" type="text" required>
+              <label
+                ><b>Name</b>
+                <input name="name" type="text" required />
               </label>
               <div class="grid">
                 <fieldset class="grid">
                   <legend><b>Zustand</b></legend>
-                  <label><input onchange="changePhase(this)" type="radio" name="u" value="ml" checked/>flüssig</label>
-                  <label><input onchange="changePhase(this)" type="radio" name="u" value="g"/>fest</label>
+                  <label><input onchange="changePhase(this)" type="radio" name="u" value="ml" checked />flüssig</label>
+                  <label><input onchange="changePhase(this)" type="radio" name="u" value="g" />fest</label>
                 </fieldset>
-                <label><b>rel. Dichte</b><input name="density" type="number" min="1" max="10" step="0.001" required value="1"></label>
+                <label
+                  ><b>rel. Dichte</b
+                  ><input name="density" type="number" min="1" max="10" step="0.001" required value="1"
+                /></label>
               </div>
             </fieldset>
-            <hr>
+            <hr />
             <label><b>Makro</b></label>
             <fieldset class="grid">
-              <label><b>N</b> (%)<input name="n" type="number" min="0" max="100" step="0.01"></label>
-              <label><b>P<sub>2</sub>O<sub>5</sub></b> (%)<input name="p2o5" type="number" min="0" max="100" step="0.01"></label>
-              <label><b>K<sub>2</sub>O</b> (%)<input name="k2o" type="number" min="0" max="100" step="0.01"></label>
-              <label><b>CaO</b> (%)<input name="cao" type="number" min="0" max="100" step="0.01"></label>
-              <label><b>MgO</b> (%)<input name="mgo" type="number" min="0" max="100" step="0.01"></label>
-              <label><b>S</b> (%)<input name="s" type="number" min="0" max="100" step="0.01"></label>
+              <label><b>N</b> (%)<input name="n" type="number" min="0" max="100" step="0.01" /></label>
+              <label
+                ><b>P<sub>2</sub>O<sub>5</sub></b> (%)<input name="p2o5" type="number" min="0" max="100" step="0.01"
+              /></label>
+              <label><b>K<sub>2</sub>O</b> (%)<input name="k2o" type="number" min="0" max="100" step="0.01" /></label>
+              <label><b>CaO</b> (%)<input name="cao" type="number" min="0" max="100" step="0.01" /></label>
+              <label><b>MgO</b> (%)<input name="mgo" type="number" min="0" max="100" step="0.01" /></label>
+              <label><b>S</b> (%)<input name="s" type="number" min="0" max="100" step="0.01" /></label>
             </fieldset>
             <label><b>Mikro</b></label>
-            <hr>
+            <hr />
             <fieldset class="grid">
-              <label><b>B</b> (%)<input name="b" type="number" min="0" max="100" step="0.001"></label>
-              <label><b>Cu</b> (%)<input name="cu" type="number" min="0" max="100" step="0.001"></label>
-              <label><b>Fe</b> (%)<input name="fe" type="number" min="0" max="100" step="0.001"></label>
-              <label><b>Mn</b> (%)<input name="mn" type="number" min="0" max="100" step="0.001"></label>
-              <label><b>Mo</b> (%)<input name="mo" type="number" min="0" max="100" step="0.001"></label>
-              <label><b>Zn</b> (%)<input name="zn" type="number" min="0" max="100" step="0.001"></label>
+              <label><b>B</b> (%)<input name="b" type="number" min="0" max="100" step="0.001" /></label>
+              <label><b>Cu</b> (%)<input name="cu" type="number" min="0" max="100" step="0.001" /></label>
+              <label><b>Fe</b> (%)<input name="fe" type="number" min="0" max="100" step="0.001" /></label>
+              <label><b>Mn</b> (%)<input name="mn" type="number" min="0" max="100" step="0.001" /></label>
+              <label><b>Mo</b> (%)<input name="mo" type="number" min="0" max="100" step="0.001" /></label>
+              <label><b>Zn</b> (%)<input name="zn" type="number" min="0" max="100" step="0.001" /></label>
             </fieldset>
           </form>
           <footer>
@@ -262,32 +358,32 @@
               <label>
                 <b>Gesamthärte</b> (berechnet)
                 <div role="group">
-                  <input name="gh" type="number" disabled>
-                  <input type="text" disabled value="°dH">
+                  <input name="gh" type="number" disabled />
+                  <input type="text" disabled value="°dH" />
                 </div>
               </label>
               <label>
                 <b>Karbonathärte</b> (berechnet)
                 <div role="group">
-                  <input name="kh" type="number" disabled>
-                  <input type="text" disabled value="°dH">
+                  <input name="kh" type="number" disabled />
+                  <input type="text" disabled value="°dH" />
                 </div>
               </label>
               <div></div>
             </div>
-            <hr>
+            <hr />
             <div class="grid">
               <label>
                 Säurekapazität K<sub>S 4,3</sub>
                 <div role="group">
-                  <input name="ks" type="number" min="0" step="0.001" onchange="updateCalculatedValues(event)">
-                  <input type="text" disabled value="mmol">
+                  <input name="ks" type="number" min="0" step="0.001" onchange="updateCalculatedValues(event)" />
+                  <input type="text" disabled value="mmol" />
                 </div>
               </label>
               <label>
                 Calcium
                 <fieldset role="group">
-                  <input name="ca" type="number" min="0" step="0.1" onchange="updateCalculatedValues(event)">
+                  <input name="ca" type="number" min="0" step="0.1" onchange="updateCalculatedValues(event)" />
                   <select name="ca-u" data-target="ca" onchange="convertValue(event)">
                     <option value="0.02495134488">mg</option>
                     <option value="40.078">mmol</option>
@@ -297,7 +393,7 @@
               <label>
                 Magnesium
                 <fieldset role="group">
-                  <input name="mg" type="number" min="0" step="0.1" onchange="updateCalculatedValues(event)">
+                  <input name="mg" type="number" min="0" step="0.1" onchange="updateCalculatedValues(event)" />
                   <select name="mg-u" data-target="mg" onchange="convertValue(event)">
                     <option value="0.04114379757">mg</option>
                     <option value="24.305">mmol</option>
@@ -306,27 +402,30 @@
               </label>
             </div>
             <div class="grid">
-              <label>Natrium
+              <label
+                >Natrium
                 <fieldset role="group">
-                  <input name="na" type="number" min="0" step="0.1">
+                  <input name="na" type="number" min="0" step="0.1" />
                   <select name="na-u" data-target="na" onchange="convertValue(event)">
                     <option value="0.04349760974">mg</option>
                     <option value="22.989769">mmol</option>
                   </select>
                 </fieldset>
               </label>
-              <label>Kalium
+              <label
+                >Kalium
                 <fieldset role="group">
-                  <input name="k" type="number" min="0" step="0.1">
+                  <input name="k" type="number" min="0" step="0.1" />
                   <select name="k-u" data-target="k" onchange="convertValue(event)">
                     <option value="0.02557655959">mg</option>
                     <option value="39.0983">mmol</option>
                   </select>
                 </fieldset>
               </label>
-              <label>Chlorid
+              <label
+                >Chlorid
                 <fieldset role="group">
-                  <input name="cl" type="number" min="0" step="0.1">
+                  <input name="cl" type="number" min="0" step="0.1" />
                   <select name="cl-u" data-target="cl" onchange="convertValue(event)">
                     <option value="0.02820635771">mg</option>
                     <option value="35.453">mmol</option>
@@ -335,27 +434,30 @@
               </label>
             </div>
             <div class="grid">
-              <label>Nitrat
+              <label
+                >Nitrat
                 <fieldset role="group">
-                  <input name="no3" type="number" min="0" step="0.1">
+                  <input name="no3" type="number" min="0" step="0.1" />
                   <select name="no3-u" data-target="no3" onchange="convertValue(event)">
                     <option value="0.01612775764">mg</option>
                     <option value="62.0049">mmol</option>
                   </select>
                 </fieldset>
               </label>
-              <label>Sulfat
+              <label
+                >Sulfat
                 <fieldset role="group">
-                  <input name="so4" type="number" min="0" step="0.1">
+                  <input name="so4" type="number" min="0" step="0.1" />
                   <select name="so4-u" data-target="so4" onchange="convertValue(event)">
                     <option value="0.01040987856">mg</option>
                     <option value="96.0626">mmol</option>
                   </select>
                 </fieldset>
               </label>
-              <label>Phosphat
+              <label
+                >Phosphat
                 <fieldset role="group">
-                  <input name="po4" type="number" min="0" step="0.1">
+                  <input name="po4" type="number" min="0" step="0.1" />
                   <select name="po4-u" data-target="po4" onchange="convertValue(event)">
                     <option value="0.01052948572">mg</option>
                     <option value="94.9714">mmol</option>
@@ -377,8 +479,17 @@
             <h3>📝 Gießcheckliste</h3>
           </header>
           <label style="width: 25%">
-            <b>Gießmenge</b><br>
-            <input type="number" name="checklist-multiplier" min="0.1" step="0.1" style="width: 80%" value="1" oninput="updateChecklistMultiplier(event)"> Liter
+            <b>Gießmenge</b><br />
+            <input
+              type="number"
+              name="checklist-multiplier"
+              min="0.1"
+              step="0.1"
+              style="width: 80%"
+              value="1"
+              oninput="updateChecklistMultiplier(event)"
+            />
+            Liter
           </label>
           <table id="checklist-table">
             <thead>
@@ -403,7 +514,7 @@
                   </select>
                 </td>
                 <td><span name="quantity"></span> <span name="u"></span></td>
-                <td><input type="checkbox" name="check-off"></td>
+                <td><input type="checkbox" name="check-off" /></td>
               </tr>
             </tbody>
           </table>
@@ -415,7 +526,10 @@
       <dialog id="reset-modal">
         <article>
           <h3>🗑️ Gespeicherte Daten löschen</h3>
-          <p>Hierbei werden alle eingegebenen Daten, gespeicherte Wasserwerte und selbst angelegte Dünger unwiderruflich gelöscht.</p>
+          <p>
+            Hierbei werden alle eingegebenen Daten, gespeicherte Wasserwerte und selbst angelegte Dünger unwiderruflich
+            gelöscht.
+          </p>
           <p><b>Möchtest du fortfahren?</b></p>
           <footer>
             <button data-target="reset-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
@@ -429,37 +543,130 @@
         <details>
           <summary>Quellen</summary>
           <ol id="refs">
-            <li>Saloner A, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) to Nitrogen Supply Under Long Photoperiod. <i>Front Plant Sci.</i> 2020;11:572293. doi:<a href="https://doi.org/10.3389/fpls.2020.572293">10.3389/fpls.2020.572293</a></li>
-            <li>Saloner A, Bernstein N. Nitrogen supply affects cannabinoid and terpenoid profile in medical cannabis (Cannabis sativa L.). <i>Industrial Crops and Products.</i> 2021;167:113516. doi:<a href="https://doi.org/10.1016/j.indcrop.2021.113516">10.1016/j.indcrop.2021.113516</a></li>
-            <li>Shiponi S, Bernstein N. Response of medical cannabis (Cannabis sativa L.) genotypes to P supply under long photoperiod: Functional phenotyping and the ionome. <i>Industrial Crops and Products.</i> 2021;161:113154. doi:<a href="https://doi.org/10.1016/j.indcrop.2020.113154">10.1016/j.indcrop.2020.113154</a></li>
-            <li>Shiponi S, Bernstein N. The Highs and Lows of P Supply in Medical Cannabis: Effects on Cannabinoids, the Ionome, and Morpho-Physiology. <i>Front Plant Sci.</i> 2021;12:657323. doi:<a href="https://doi.org/10.3389/fpls.2021.657323">10.3389/fpls.2021.657323</a></li>
-            <li>Saloner A, Sacks MM, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) Genotypes to K Supply Under Long Photoperiod. <i>Front Plant Sci.</i> 2019;10:1369. doi:<a href="https://doi.org/10.3389/fpls.2019.01369">10.3389/fpls.2019.01369</a></li>
-            <li>Saloner A, Bernstein N. Effect of Potassium (K) Supply on Cannabinoids, Terpenoids and Plant Function in Medical Cannabis. <i>Agronomy.</i> 2022;12(5):1242. doi:<a href="https://doi.org/10.3390/agronomy12051242">10.3390/agronomy12051242</a></li>
-            <li>Zheng Y. <i>Handbook of Cannabis Production in Controlled Environments.</i> 1st ed. CRC Press; 2022. doi:<a href="https://doi.org/10.1201/9781003150442">10.1201/9781003150442</a></li>
-            <li>Cockson P, Schroeder-Moreno M, Veazie P, et al. Impact of Phosphorus on Cannabis sativa Reproduction, Cannabinoids, and Terpenes. <i>Applied Sciences.</i> 2020;10(21):7875. doi:<a href="https://doi.org/10.3390/app10217875">10.3390/app10217875</a></li>
-            <li>Bevan L, Jones M, Zheng Y. Optimisation of Nitrogen, Phosphorus, and Potassium for Soilless Production of Cannabis sativa in the Flowering Stage Using Response Surface Analysis. <i>Front Plant Sci.</i> 2021;12:764103. doi:<a href="https://doi.org/10.3389/fpls.2021.764103">10.3389/fpls.2021.764103</a></li>
-            <li>Veazie P, Cockson P, Logan D, Whipker B. Magnesium’s Impact on Cannabis sativa ‘BaOx’ and ‘Suver Haze’ Growth and Cannabinoid Production. <i>Journal of Agricultural Hemp Research.</i> 2021;2. doi:<a href="https://doi.org/10.61611/2688-5182.1018">10.61611/2688-5182.1018</a></li>
-            <li>Wei X, Zhou W, Long S, et al. Effects of Different N, P, and K Rates on the Growth and Cannabinoid Content of Industrial Hemp.<i>Journal of Natural Fibers.</i> 2023;20(1):2159605. doi:<a href="10.1080/15440478.2022.2159605">10.1080/15440478.2022.2159605</a></li>
-            <li>Veazie P, Cockson P, Kidd D, Whip B. Elevated Phosphorus Fertility Impact on Cannabis sativa ‘BaOx’ Growth and Nutrient Accumulation. <i>International Journal of Innovative Science, Engineering & Technology.</i> 2021;8(2).</li>
-            <li>Morad D, Bernstein N. Response of Medical Cannabis to Magnesium (Mg) Supply at the Vegetative Growth Phase. <i>Plants.</i> 2023;12(14):2676. doi:<a href="https://doi.org/10.3390/plants12142676">10.3390/plants12142676</a></li>
-            <li>Westmoreland FM, Bugbee B. Sustainable Cannabis Nutrition: Elevated root-zone phosphorus significantly increases leachate P and does not improve yield or quality. <i>Front Plant Sci.</i> 2022;13:1015652. doi:<a href="https://doi.org/10.3389/fpls.2022.1015652">10.3389/fpls.2022.1015652</a></li>
+            <li>
+              Saloner A, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) to Nitrogen Supply Under Long
+              Photoperiod. <i>Front Plant Sci.</i> 2020;11:572293. doi:<a
+                href="https://doi.org/10.3389/fpls.2020.572293"
+                >10.3389/fpls.2020.572293</a
+              >
+            </li>
+            <li>
+              Saloner A, Bernstein N. Nitrogen supply affects cannabinoid and terpenoid profile in medical cannabis
+              (Cannabis sativa L.). <i>Industrial Crops and Products.</i> 2021;167:113516. doi:<a
+                href="https://doi.org/10.1016/j.indcrop.2021.113516"
+                >10.1016/j.indcrop.2021.113516</a
+              >
+            </li>
+            <li>
+              Shiponi S, Bernstein N. Response of medical cannabis (Cannabis sativa L.) genotypes to P supply under long
+              photoperiod: Functional phenotyping and the ionome. <i>Industrial Crops and Products.</i> 2021;161:113154.
+              doi:<a href="https://doi.org/10.1016/j.indcrop.2020.113154">10.1016/j.indcrop.2020.113154</a>
+            </li>
+            <li>
+              Shiponi S, Bernstein N. The Highs and Lows of P Supply in Medical Cannabis: Effects on Cannabinoids, the
+              Ionome, and Morpho-Physiology. <i>Front Plant Sci.</i> 2021;12:657323. doi:<a
+                href="https://doi.org/10.3389/fpls.2021.657323"
+                >10.3389/fpls.2021.657323</a
+              >
+            </li>
+            <li>
+              Saloner A, Sacks MM, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) Genotypes to K Supply
+              Under Long Photoperiod. <i>Front Plant Sci.</i> 2019;10:1369. doi:<a
+                href="https://doi.org/10.3389/fpls.2019.01369"
+                >10.3389/fpls.2019.01369</a
+              >
+            </li>
+            <li>
+              Saloner A, Bernstein N. Effect of Potassium (K) Supply on Cannabinoids, Terpenoids and Plant Function in
+              Medical Cannabis. <i>Agronomy.</i> 2022;12(5):1242. doi:<a href="https://doi.org/10.3390/agronomy12051242"
+                >10.3390/agronomy12051242</a
+              >
+            </li>
+            <li>
+              Zheng Y. <i>Handbook of Cannabis Production in Controlled Environments.</i> 1st ed. CRC Press; 2022.
+              doi:<a href="https://doi.org/10.1201/9781003150442">10.1201/9781003150442</a>
+            </li>
+            <li>
+              Cockson P, Schroeder-Moreno M, Veazie P, et al. Impact of Phosphorus on Cannabis sativa Reproduction,
+              Cannabinoids, and Terpenes. <i>Applied Sciences.</i> 2020;10(21):7875. doi:<a
+                href="https://doi.org/10.3390/app10217875"
+                >10.3390/app10217875</a
+              >
+            </li>
+            <li>
+              Bevan L, Jones M, Zheng Y. Optimisation of Nitrogen, Phosphorus, and Potassium for Soilless Production of
+              Cannabis sativa in the Flowering Stage Using Response Surface Analysis.
+              <i>Front Plant Sci.</i> 2021;12:764103. doi:<a href="https://doi.org/10.3389/fpls.2021.764103"
+                >10.3389/fpls.2021.764103</a
+              >
+            </li>
+            <li>
+              Veazie P, Cockson P, Logan D, Whipker B. Magnesium’s Impact on Cannabis sativa ‘BaOx’ and ‘Suver Haze’
+              Growth and Cannabinoid Production. <i>Journal of Agricultural Hemp Research.</i> 2021;2. doi:<a
+                href="https://doi.org/10.61611/2688-5182.1018"
+                >10.61611/2688-5182.1018</a
+              >
+            </li>
+            <li>
+              Wei X, Zhou W, Long S, et al. Effects of Different N, P, and K Rates on the Growth and Cannabinoid Content
+              of Industrial Hemp.<i>Journal of Natural Fibers.</i> 2023;20(1):2159605. doi:<a
+                href="10.1080/15440478.2022.2159605"
+                >10.1080/15440478.2022.2159605</a
+              >
+            </li>
+            <li>
+              Veazie P, Cockson P, Kidd D, Whip B. Elevated Phosphorus Fertility Impact on Cannabis sativa ‘BaOx’ Growth
+              and Nutrient Accumulation.
+              <i>International Journal of Innovative Science, Engineering & Technology.</i> 2021;8(2).
+            </li>
+            <li>
+              Morad D, Bernstein N. Response of Medical Cannabis to Magnesium (Mg) Supply at the Vegetative Growth
+              Phase. <i>Plants.</i> 2023;12(14):2676. doi:<a href="https://doi.org/10.3390/plants12142676"
+                >10.3390/plants12142676</a
+              >
+            </li>
+            <li>
+              Westmoreland FM, Bugbee B. Sustainable Cannabis Nutrition: Elevated root-zone phosphorus significantly
+              increases leachate P and does not improve yield or quality. <i>Front Plant Sci.</i> 2022;13:1015652.
+              doi:<a href="https://doi.org/10.3389/fpls.2022.1015652">10.3389/fpls.2022.1015652</a>
+            </li>
+            <li>
+              Saloner A, Bernstein, N.. Nitrogen Source Matters: High NH4/NO3 Ratio Reduces Cannabinoids, Terpenoids,
+              and Yield in Medical Cannabis. <i>Front Plant Sci.</i> 2022;13:830224. doi:<a
+                href="https://doi.org/10.3389/fpls.2022.830224"
+                >10.3389/fpls.2022.830224</a
+              >
+            </li>
           </ol>
         </details>
         <details>
           <summary>Hinweise</summary>
           <ul>
             <li>
-              Die organische Düngung von Cannabis ist noch wenig erforscht, daher gibt es hier keine Empfehlungen. Ausnahmen stellen die folgenden zwei Arbeiten dar, die sich mit dem Stickstoffgehalt befassen:
+              Die organische Düngung von Cannabis ist noch wenig erforscht, daher gibt es hier keine Empfehlungen.
+              Ausnahmen stellen die folgenden zwei Arbeiten dar, die sich mit dem Stickstoffgehalt befassen:
               <ul>
-                <li>Caplan D, Dixon M, Zheng Y. Optimal Rate of Organic Fertilizer during the Vegetative-stage for Cannabis Grown in Two Coir-based Substrates. <i>horts.</i> 2017;52(9):1307-1312. doi:<a href="https://doi.org/10.21273/HORTSCI11903-17">10.21273/HORTSCI11903-17</a></li>
-                <li>Caplan D, Dixon M, Zheng Y. Optimal Rate of Organic Fertilizer during the Flowering Stage for Cannabis Grown in Two Coir-based Substrates. <i>horts.</i> 2017;52(12):1796-1803. doi:<a href="https://doi.org/10.21273/HORTSCI12401-17">10.21273/HORTSCI12401-17</a></li>
+                <li>
+                  Caplan D, Dixon M, Zheng Y. Optimal Rate of Organic Fertilizer during the Vegetative-stage for
+                  Cannabis Grown in Two Coir-based Substrates. <i>horts.</i> 2017;52(9):1307-1312. doi:<a
+                    href="https://doi.org/10.21273/HORTSCI11903-17"
+                    >10.21273/HORTSCI11903-17</a
+                  >
+                </li>
+                <li>
+                  Caplan D, Dixon M, Zheng Y. Optimal Rate of Organic Fertilizer during the Flowering Stage for Cannabis
+                  Grown in Two Coir-based Substrates. <i>horts.</i> 2017;52(12):1796-1803. doi:<a
+                    href="https://doi.org/10.21273/HORTSCI12401-17"
+                    >10.21273/HORTSCI12401-17</a
+                  >
+                </li>
               </ul>
             </li>
-            <li>Die Stickstoffquelle der einzelnen Dünger wird noch nicht angezeigt, die entsprechenden Daten sind aber bereits hinterlegt. Die Ansicht wird in einer nächster Version hinzugefügt.</li>
           </ul>
         </details>
       </div>
-      <p>Have fun and grow on! ✌️🏔️ <p>
+      <p>Have fun and grow on! ✌️🏔️</p>
+      <p></p>
     </footer>
   </body>
 </html>

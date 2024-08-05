@@ -25,6 +25,22 @@
 .second-col input {
   width: 4rem;
 }
+.toggle-button {
+  text-decoration: none;
+  display: inline-block;
+  width: 1rem;
+  margin-inline-start: 0.5rem;
+  transform: rotate(-90deg);
+  background-image: var(--pico-icon-chevron);
+  background-position: right center;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+  transition: transform var(--pico-transition);
+}
+.toggle-button[toggled] {
+  transform: rotate(90deg);
+}
+
 .last-col {
   width: 4.5rem;
   border: 0;
@@ -53,9 +69,6 @@
 }
 .slim {
   font-weight: 400;
-}
-.centered {
-  text-align: center;
 }
 .hidden {
   display: none;
