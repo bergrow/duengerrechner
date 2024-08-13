@@ -14,8 +14,11 @@ var waterData;
 // Init
 const init = () => {
   customFertData = JSON.parse(localStorage.getItem("customFertData")) || [];
-  waterData = JSON.parse(localStorage.getItem("waterData")) || {};
   populateFertilizerDropdown();
+
+  waterData = JSON.parse(localStorage.getItem("waterData")) || {};
+  populateWaterModalForm();
+  updateWaterRow(document.querySelector("#water-row"));
 
   const checklistRow = document.querySelector("#checklist-table tbody tr");
   checklistRow.addEventListener("input", (event) => updateChecklistRow(event.currentTarget));
@@ -128,8 +131,9 @@ const updateSums = () => {
   );
 };
 
-const changeOptRanges = () =>
+const changeOptRanges = () => {
   document.querySelectorAll("#opt-ranges em[data-stage]").forEach((em) => em.classList.toggle("hidden"));
+};
 
 const showMicros = (event) => {
   document.querySelectorAll(".macro").forEach((elem) => elem.classList.add("hidden"));
@@ -183,6 +187,16 @@ const saveNewFertilizerForm = (event) => {
 };
 
 // Water Modal
+const populateWaterModalForm = () => {
+  const form = document.getElementById("water-modal-form");
+  form.querySelectorAll("input[type=number]:not([disabled])").forEach((input) => {
+    if (convTable[input.name]) {
+      input.value = round(waterData[convTable[input.name].to] / convTable[input.name].factor, 1);
+    } else input.value = waterData[input.name];
+  });
+  updateCalculatedValues(form);
+};
+
 const convertValue = (event) => {
   const {
     currentTarget: {
@@ -195,10 +209,14 @@ const convertValue = (event) => {
   form[target].setAttribute("step", convFac < 1 ? "0.1" : "0.001");
 };
 
-const updateCalculatedValues = (event) => {
+const updateCalculatedValuesEventHandler = (event) => {
   const {
     currentTarget: { form },
   } = event;
+  updateCalculatedValues(form);
+};
+
+const updateCalculatedValues = (form) => {
   const ks = toFloat(form.querySelector("input[name=ks]").value);
   const [ca, mg] = ["ca", "mg"].map((name) => {
     const val = toFloat(form.querySelector(`input[name=${name}]`).value);
@@ -209,7 +227,7 @@ const updateCalculatedValues = (event) => {
   form.querySelector("input[name=kh]").value = calcKH(ks).toFixed(1);
 };
 
-const saveWaterForm = (event) => {
+const saveWaterModalForm = (event) => {
   const data = saveModalForm(event);
   if (!data) return;
   let res = {};
@@ -265,8 +283,9 @@ const resetCalculator = (event) => {
   location.reload();
 };
 
-const updateChecklistMultiplier = (event) =>
+const updateChecklistMultiplier = (event) => {
   document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
+};
 
 // Table functions
 const addRow = (tbody, eventHandler, appendix = null) => {

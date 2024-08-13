@@ -353,7 +353,7 @@
             <button aria-label="Close" rel="prev" data-target="water-modal" onclick="toggleModal(event)"></button>
             <h3>📝 Wasserwerte eingeben</h3>
           </header>
-          <form id="water-modal-form" data-target="water-modal" onsubmit="saveWaterForm(event)">
+          <form id="water-modal-form" data-target="water-modal" onsubmit="saveWaterModalForm(event)">
             <div class="grid">
               <label>
                 <b>Gesamthärte</b> (berechnet)
@@ -376,14 +376,26 @@
               <label>
                 Säurekapazität K<sub>S 4,3</sub>
                 <div role="group">
-                  <input name="ks" type="number" min="0" step="0.001" onchange="updateCalculatedValues(event)" />
+                  <input
+                    name="ks"
+                    type="number"
+                    min="0"
+                    step="0.001"
+                    onchange="updateCalculatedValuesEventHandler(event)"
+                  />
                   <input type="text" disabled value="mmol" />
                 </div>
               </label>
               <label>
                 Calcium
                 <fieldset role="group">
-                  <input name="ca" type="number" min="0" step="0.1" onchange="updateCalculatedValues(event)" />
+                  <input
+                    name="ca"
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    onchange="updateCalculatedValuesEventHandler(event)"
+                  />
                   <select name="ca-u" data-target="ca" onchange="convertValue(event)">
                     <option value="0.02495134488">mg</option>
                     <option value="40.078">mmol</option>
@@ -393,7 +405,13 @@
               <label>
                 Magnesium
                 <fieldset role="group">
-                  <input name="mg" type="number" min="0" step="0.1" onchange="updateCalculatedValues(event)" />
+                  <input
+                    name="mg"
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    onchange="updateCalculatedValuesEventHandler(event)"
+                  />
                   <select name="mg-u" data-target="mg" onchange="convertValue(event)">
                     <option value="0.04114379757">mg</option>
                     <option value="24.305">mmol</option>
