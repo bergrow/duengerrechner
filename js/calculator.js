@@ -116,16 +116,16 @@ const updateWaterRow = (row) => {
 };
 
 const updateSums = () => {
-  let n;
+  let nSum;
   ["n", "n-no3", "n-nh4", "n-nu", "n-org", "p", "k", "ca", "mg", "s", "b", "cu", "fe", "mn", "mo", "zn"].forEach(
     (name) => {
       let value = Array.from(
         document.querySelectorAll(`span[name=${name}]`),
         (elem) => parseFloat(elem.dataset.value) || 0
       ).reduce((a, c) => a + c, 0);
-      if (name === "n") n = value;
+      if (name === "n") nSum = value;
       document.querySelector(`#${name}-sum`).textContent = ["n-no3", "n-nh4", "n-nu", "n-org"].includes(name)
-        ? `${formatValue((value / n) * 100, 0)} %`
+        ? `${formatValue((value / nSum) * 100, 0, " %", "0")}`
         : formatValue(value, decimals(name));
     }
   );
@@ -286,57 +286,3 @@ const resetCalculator = (event) => {
 const updateChecklistMultiplier = (event) => {
   document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
 };
-
-// Table functions
-const addRow = (tbody, eventHandler, appendix = null) => {
-  if (appendix) appendix.parentNode.removeChild(appendix);
-  let newRow = tbody.querySelector("tr:last-of-type").cloneNode(true);
-  clearRow(newRow);
-  if (eventHandler) newRow.addEventListener("input", eventHandler);
-  tbody.appendChild(newRow);
-  if (appendix) tbody.querySelector("tr:last-of-type").appendChild(appendix);
-  return newRow;
-};
-
-const updateRow = (row, data, multiplier = 1) => {
-  row.querySelectorAll("span").forEach((span) => {
-    const name = span.getAttribute("name");
-    let value = data[name];
-    value = isNaN(value) ? value : round(value * multiplier, 3);
-    span.dataset.value = value;
-    span.textContent = isNaN(value) ? value : formatValue(value, decimals(name));
-  });
-};
-
-const removeRow = (tbody, appendix = null) => {
-  tbody.removeChild(tbody.querySelector("tr:last-of-type"));
-  if (appendix) tbody.querySelector("tr:last-of-type").appendChild(appendix);
-};
-
-const clearRow = (row) => {
-  row.querySelectorAll("select").forEach((select) => (select.selectedIndex = 0));
-  row.querySelectorAll("input[type=number]").forEach((input) => (input.value = ""));
-  row.querySelectorAll("input[type=checkbox]").forEach((input) => (input.checked = false));
-  row.querySelectorAll("span").forEach((span) => {
-    span.textContent = "";
-    span.classList.remove("checked-off");
-    if ("value" in span.dataset) span.dataset.value = 0;
-    if ("original" in span.dataset) span.dataset.original = "";
-  });
-};
-
-// Helper functions
-const delimiter = () => {
-  const delimiter = new Option("———", "-1");
-  delimiter.disabled = true;
-  return delimiter;
-};
-const decimals = (name) => ("n-no3n-nh4n-nun-orgpkcamgsghkh".match(name) ? 1 : 2);
-const formatValue = (value, decimals) => {
-  const formattingSettings = { maximumFractionDigits: decimals, minimumFractionDigits: decimals };
-  return value && value !== 0 ? value.toLocaleString(undefined, formattingSettings) : "-";
-};
-const round = (v, p = 2) => toFloat(v.toFixed(p));
-const toFloat = (str, def = 0) => parseFloat(str) || def;
-const calcGH = (ca, mg) => ca * 0.14 + mg * 0.2307;
-const calcKH = (ks) => (ks === 0 ? 0 : (ks - 0.05) * 2.8);

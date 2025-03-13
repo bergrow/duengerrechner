@@ -1,0 +1,53 @@
+body {
+  font-family: sans-serif;
+  font-size: small;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+header > img {
+  margin-right: 10px;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+th,
+td {
+  padding: 0.4rem 0.3rem;
+  vertical-align: top;
+}
+td {
+  text-align: right;
+}
+thead > tr:last-of-type > th,
+thead > tr:last-of-type > td {
+  border-bottom-width: 2px;
+}
+tbody > tr > td {
+  max-width: 12rem;
+}
+tfoot > tr:last-of-type > th,
+tfoot > tr:last-of-type > td {
+  font-weight: bold;
+  border-top-width: 2px;
+}
+.left {
+  text-align: left;
+}
+footer > p {
+  text-align: right;
+}
+
+@media print {
+  @page {
+    size: 297mm 210mm;
+    margin: 10mm;
+  }
+}

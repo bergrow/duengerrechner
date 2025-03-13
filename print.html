@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/print.css" />
+    <script src="js/helper.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/fertilizers.js"></script>
+    <script src="js/print.js"></script>
+    <title>Düngeplan - bergrows Düngerrechner</title>
+  </head>
+  <body onload="init()">
+    <header>
+      <img width="50" src="assets/images/icon.png" />
+      <h1>Düngeplan vom 13.03.2025</h1>
+    </header>
+    <main>
+      <table id="fertilizer-table">
+        <thead>
+          <tr>
+            <th colspan="2"></th>
+            <th colspan="10">MAKRONÄHRSTOFFE</th>
+            <th colspan="6">MIKRONÄHRSTOFFE</th>
+          </tr>
+          <tr>
+            <th>Dünger</th>
+            <th>Dosierung</th>
+            <th>N</th>
+            <th><small>N-NO3</small></th>
+            <th><small>N-NH4</small></th>
+            <th><small>N-NU</small></th>
+            <th><small>N-org</small></th>
+            <th>P</th>
+            <th>K</th>
+            <th>Ca</th>
+            <th>Mg</th>
+            <th>S</th>
+            <th>B</th>
+            <th>Cu</th>
+            <th>Fe</th>
+            <th>Mn</th>
+            <th>Mo</th>
+            <th>Zn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left"><span name="name"></span></td>
+            <td><span name="dose"></span> <span name="u"></span></td>
+            <td><span name="n"></span></td>
+            <td>
+              <small><span name="n-no3"></span></small>
+            </td>
+            <td>
+              <small><span name="n-nh4"></span></small>
+            </td>
+            <td>
+              <small><span name="n-nu"></span></small>
+            </td>
+            <td>
+              <small><span name="n-org"></span></small>
+            </td>
+            <td><span name="p"></span></td>
+            <td><span name="k"></span></td>
+            <td><span name="ca"></span></td>
+            <td><span name="mg"></span></td>
+            <td><span name="s"></span></td>
+            <td><span name="b"></span></td>
+            <td><span name="cu"></span></td>
+            <td><span name="fe"></span></td>
+            <td><span name="mn"></span></td>
+            <td><span name="mo"></span></td>
+            <td><span name="zn"></span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr id="water-row">
+            <td colspan="2" class="left"><b>Leitungswasser</b> (<span name="dilution"></span>)</td>
+            <td><span name="n">-</span></td>
+            <td colspan="4"></td>
+            <td><span name="p">-</span></td>
+            <td><span name="k">-</span></td>
+            <td><span name="ca">-</span></td>
+            <td><span name="mg">-</span></td>
+            <td><span name="s">-</span></td>
+            <td colspan="3" class="left"><b>Gesamthärte: </b><span name="gh">-</span>&nbsp;°dH</td>
+            <td colspan="3" class="left"><b>Karbonathärte: </b><span name="kh">-</span>&nbsp;°dH</td>
+          </tr>
+          <tr id="sum-row">
+            <th scope="row" colspan="2">Summe (mg/l)</th>
+            <td><span id="n-sum"></span></td>
+            <td><small><span id="n-no3-sum"></span></small></td>
+            <td><small><span id="n-nh4-sum"></span></small></span></td>
+            <td><small><span id="n-nu-sum"></span></small></td>
+            <td><small><span id="n-org-sum"></span></small></td>
+            <td><span id="p-sum"></span></td>
+            <td><span id="k-sum"></span></td>
+            <td><span id="ca-sum"></span></td>
+            <td><span id="mg-sum"></span></td>
+            <td><span id="s-sum"></span></td>
+            <td><span id="b-sum"></span></td>
+            <td><span id="cu-sum"></span></td>
+            <td><span id="fe-sum"></span></td>
+            <td><span id="mn-sum"></span></td>
+            <td><span id="mo-sum"></span></td>
+            <td><span id="zn-sum"></span></td>
+          </tr>
+        </tfoot>
+      </table>
+    </main>
+    <footer>
+      <p>erstellt mit <b>bergrows Düngerechner</b> v2.6.2</p>
+    </footer>
+  </body>
+</html>
+
+<!--
+  <small>(1% / 2% / 5% / 10% / 20%)</small>
+  <small>(90 ml / 45 ml / 18 ml / 9 ml / 4,5 ml)</small>
+
+-->
