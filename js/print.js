@@ -36,7 +36,6 @@ const init = () => {
       (elem) => parseFloat(elem.dataset.value) || 0
     ).reduce((a, c) => a + c, 0);
     if (name === "n") nSum = value;
-    console.log(name + ": " + value + " nSum:" + nSum);
     span.textContent = ["n-no3", "n-nh4", "n-nu", "n-org"].includes(name)
       ? `${formatValue((value / nSum) * 100, 0, " %", "0")}`
       : formatValue(value, decimals(name));
@@ -44,3 +43,7 @@ const init = () => {
 };
 
 window.print();
+window.addEventListener("afterprint", (event) => {
+  console.log("after print");
+  window.close();
+});

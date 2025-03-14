@@ -1,29 +1,62 @@
 :root {
-  --pico-font-size: 85%;
+  --pico-font-size: 68.75%;
+  --first-col-width: 12rem;
+  --second-col-width: 6.5rem;
 }
+@media (min-width: 576px) {
+  :root {
+    --pico-font-size: 75%;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --pico-font-size: 81.25%;
+    --first-col-width: 17rem;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --pico-font-size: 87.5%;
+    --first-col-width: 20rem;
+    --second-col-width: 7rem;
+  }
+  .container-fluid {
+    max-width: 93.75%;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --pico-font-size: 93.75%;
+    --first-col-width: 23rem;
+  }
+  .container-fluid {
+    max-width: 87.5%;
+  }
+}
+@media (min-width: 1536px) {
+  :root {
+    --pico-font-size: 100%;
+    --first-col-width: 26rem;
+    --second-col-width: 7.5rem;
+  }
+  .container-fluid {
+    max-width: 81.25%;
+  }
+}
+
 /* Fixes misalignment in FireFox */
 .dropdown {
   margin: 0 !important;
 }
 .first-col {
-  width: 12.5rem;
+  width: var(--first-col-width);
 }
-.first-two-col {
-  width: 19rem;
-}
-@media (min-width: 1280px) {
-  .first-col {
-    width: 25rem;
-  }
-  .first-two-col {
-    width: 31.5rem;
-  }
-}
+/* Tables */
 .second-col {
-  width: 6.5rem;
+  width: var(--second-col-width);
 }
 .second-col input {
-  width: 4rem;
+  width: calc(var(--second-col-width) - 2.5rem);
 }
 .toggle-button {
   text-decoration: none;
@@ -40,16 +73,41 @@
 .toggle-button[toggled] {
   transform: rotate(90deg);
 }
-
 .last-col {
   width: 4.5rem;
   border: 0;
   text-align: center;
+  --pico-border-width: 0.0625rem;
 }
 .last-col button {
-  border-width: 0.0625rem;
-  min-width: 20px;
+  min-width: 1.5rem;
 }
+#water-table > tr:first-of-type > th,
+#water-table > tr:first-of-type > td {
+  --pico-border-width: 0.1875rem;
+  --pico-font-weight: 600;
+  padding-top: var(--pico-block-spacing-vertical);
+}
+
+.n-form {
+  --pico-font-size: 0.875em;
+}
+
+/* Table Footer */
+tfoot th {
+  --pico-font-weight: 400;
+}
+#opt-ranges th,
+#opt-ranges td {
+  --pico-font-weight: 400;
+  padding-top: var(--pico-block-spacing-vertical);
+  border: none;
+}
+#opt-ranges select {
+  --pico-border-width: 0.0625rem;
+}
+
+/* Helpers */
 .shrink {
   --pico-spacing: 0.5rem;
   table-layout: fixed;
@@ -67,17 +125,11 @@
   padding-inline-end: calc(var(--pico-form-element-spacing-horizontal) + 1.25rem);
   background-position: center right 0.25rem;
 }
-.slim {
-  font-weight: 400;
-}
 .hidden {
   display: none;
 }
-@media (max-width: 1279px) {
-  #opt-ranges td {
-    font-size: 0.875em;
-  }
-}
+
+/* Modals */
 #water-modal select,
 #water-modal input[type="text"] {
   width: 50%;

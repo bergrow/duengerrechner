@@ -11,6 +11,16 @@ const convTable = {
 var customFertData;
 var waterData;
 
+const prefill = (num = 3) => {
+  addFertRow(num);
+  document.querySelectorAll("#fertilizer-table > tr").forEach((row) => {
+    const select = row.querySelector("select[name=fertilizer]");
+    select.selectedIndex = Math.floor(Math.random() * select.options.length);
+    row.querySelector("input[name=dose]").value = Math.round((Math.random() * 5 + Number.EPSILON + 0.5) * 2) / 2;
+    updateFertRow(row);
+  });
+};
+
 // Init
 const init = () => {
   customFertData = JSON.parse(localStorage.getItem("customFertData")) || [];
@@ -22,13 +32,11 @@ const init = () => {
 
   const checklistRow = document.querySelector("#checklist-table tbody tr");
   checklistRow.addEventListener("input", (event) => updateChecklistRow(event.currentTarget));
-  document.querySelector("#fertilizer-table tbody tr").addEventListener("input", (event) => {
+  document.querySelector("#fertilizer-table tr").addEventListener("input", (event) => {
     updateFertRow(event.currentTarget);
     updateChecklistRow(checklistRow, event.currentTarget);
   });
-  document
-    .querySelector("#water-table tbody tr")
-    .addEventListener("input", (event) => updateWaterRow(event.currentTarget));
+  document.querySelector("#water-row").addEventListener("input", (event) => updateWaterRow(event.currentTarget));
 
   const toggleThemeButton = document.querySelector("#toggle-theme-button");
   if (systemTheme() === "light") toggleThemeButton.classList.add("theme-toggle--toggled");
@@ -37,6 +45,7 @@ const init = () => {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
     if (!document.documentElement.dataset.theme) toggleThemeButton.classList.toggle("theme-toggle--toggled");
   });
+  prefill();
 };
 
 const toggleTheme = (event) => {
@@ -67,7 +76,7 @@ const addFertilizerDropdownOption = (option) => {
 
 const addFertRow = (numRows = 1) => {
   const rowButtons = document.querySelector("#fertilizer-row-buttons");
-  const tbody = document.querySelector("#fertilizer-table tbody");
+  const tbody = document.querySelector("#fertilizer-table");
   for (let i = 0; i < numRows; i++) {
     const checklistRow = addRow(document.querySelector("#checklist-table tbody"), (event) =>
       updateChecklistRow(event.currentTarget)
@@ -90,13 +99,13 @@ const updateFertRow = (row) => {
     .find((item) => item.id == row.querySelector("select[name=fertilizer]").selectedOptions[0].value);
   if (data === undefined) return;
   const dose = toFloat(row.querySelector("input[name=dose]").value);
-  updateRow(row, data, dose);
+  updateRow(row, { dose: `${formatValue(dose, 2)}`, ...data }, dose);
   updateSums();
 };
 
 const removeFertRow = () => {
   const rowButtons = document.querySelector("#fertilizer-row-buttons");
-  const tbody = document.querySelector("#fertilizer-table tbody");
+  const tbody = document.querySelector("#fertilizer-table");
   removeRow(tbody, rowButtons);
   if (tbody.querySelectorAll("tr").length === 1) rowButtons.querySelectorAll("button")[1].disabled = true;
   removeRow(document.querySelector("#checklist-table tbody"));
