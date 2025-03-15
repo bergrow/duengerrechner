@@ -2,14 +2,11 @@
   size: 297mm 210mm;
   margin: 10mm;
 }
-
 :root {
   font-family: sans-serif;
   font-size: small;
 }
-
-header > nav > ul,
-header > nav > hgroup,
+header > nav,
 main > dialog,
 main > button,
 select,
@@ -20,18 +17,30 @@ input,
 footer > div {
   display: none;
 }
-
 main,
 section,
 table {
   width: 100%;
 }
-
 .slim {
   font-size: smaller;
   vertical-align: bottom;
 }
-
+header > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header > div > hgroup > h1 {
+  margin-bottom: 0;
+}
+header > div > hgroup > p {
+  margin-top: 0;
+  font-weight: bold;
+}
+header > div > img {
+  width: 50px;
+}
 table,
 th,
 td {
@@ -43,12 +52,6 @@ td {
 td {
   text-align: right;
 }
-
-header {
-  display: flex;
-  align-items: center;
-}
-
 thead > tr:first-of-type > th,
 thead > tr:first-of-type > td {
   border: 0;
@@ -62,7 +65,6 @@ thead > tr:last-of-type > th,
 thead > tr:last-of-type > td {
   border-bottom-width: 1px;
 }
-
 tbody > tr > td:first-of-type {
   text-align: left;
 }

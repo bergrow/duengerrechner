@@ -11,16 +11,6 @@ const convTable = {
 var customFertData;
 var waterData;
 
-const prefill = (num = 3) => {
-  addFertRow(num);
-  document.querySelectorAll("#fertilizer-table > tr").forEach((row) => {
-    const select = row.querySelector("select[name=fertilizer]");
-    select.selectedIndex = Math.floor(Math.random() * select.options.length);
-    row.querySelector("input[name=dose]").value = Math.round((Math.random() * 5 + Number.EPSILON + 0.5) * 2) / 2;
-    updateFertRow(row);
-  });
-};
-
 // Init
 const init = () => {
   customFertData = JSON.parse(localStorage.getItem("customFertData")) || [];
@@ -32,10 +22,9 @@ const init = () => {
 
   const checklistRow = document.querySelector("#checklist-table tbody tr");
   checklistRow.addEventListener("input", (event) => updateChecklistRow(event.currentTarget));
-  document.querySelector("#fertilizer-table tr").addEventListener("input", (event) => {
-    updateFertRow(event.currentTarget);
-    updateChecklistRow(checklistRow, event.currentTarget);
-  });
+  document
+    .querySelector("#fertilizer-table tr")
+    .addEventListener("input", (event) => updateFertRow(event.currentTarget, checklistRow));
   document.querySelector("#water-row").addEventListener("input", (event) => updateWaterRow(event.currentTarget));
 
   const toggleThemeButton = document.querySelector("#toggle-theme-button");
@@ -45,7 +34,12 @@ const init = () => {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
     if (!document.documentElement.dataset.theme) toggleThemeButton.classList.toggle("theme-toggle--toggled");
   });
-  prefill();
+
+  const dateElem = document.querySelector("header > div > hgroup > p");
+  dateElem.textContent = dateElem.textContent.replace(
+    "TT.MM.JJJJ",
+    new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
+  );
 };
 
 const toggleTheme = (event) => {
@@ -81,25 +75,22 @@ const addFertRow = (numRows = 1) => {
     const checklistRow = addRow(document.querySelector("#checklist-table tbody"), (event) =>
       updateChecklistRow(event.currentTarget)
     );
-    const row = addRow(
-      tbody,
-      (event) => {
-        updateFertRow(event.currentTarget);
-        updateChecklistRow(checklistRow, event.currentTarget);
-      },
-      rowButtons
-    );
+    const row = addRow(tbody, (event) => updateFertRow(event.currentTarget, checklistRow), rowButtons);
   }
   rowButtons.querySelectorAll("button")[1].disabled = false;
 };
 
-const updateFertRow = (row) => {
+const updateFertRow = (row, checklistRow) => {
   const data = fertData
     .concat(customFertData)
     .find((item) => item.id == row.querySelector("select[name=fertilizer]").selectedOptions[0].value);
   if (data === undefined) return;
   const dose = toFloat(row.querySelector("input[name=dose]").value);
-  updateRow(row, { dose: `${formatValue(dose, 2)}`, ...data }, dose);
+  const inputContainer = row.querySelector("div.input-container");
+  inputContainer.classList.remove("milliliter", "gram");
+  inputContainer.classList.add(data.u === "g" ? "gram" : "milliliter");
+  updateRow(row, { dose: `${formatValue(dose, 2, data.u)}`, ...data }, dose);
+  updateChecklistRow(checklistRow, { dose, ...data });
   updateSums();
 };
 
@@ -120,7 +111,8 @@ const updateWaterRow = (row) => {
     ...waterData,
   };
   const dilution = toFloat(row.querySelector("input[name=dilution]").value);
-  updateRow(row, data, 1 - dilution / 100);
+  const dilutionStr = dilution === 0 ? "unverdünnt" : formatValue(dilution, 0, "%");
+  updateRow(row, { dilution: dilutionStr, ...data }, 1 - dilution / 100);
   updateSums();
 };
 
@@ -134,7 +126,7 @@ const updateSums = () => {
       ).reduce((a, c) => a + c, 0);
       if (name === "n") nSum = value;
       document.querySelector(`#${name}-sum`).textContent = ["n-no3", "n-nh4", "n-nu", "n-org"].includes(name)
-        ? `${formatValue((value / nSum) * 100, 0, " %", "0")}`
+        ? `${formatValue((value / nSum) * 100, 0, "%", "0")}`
         : formatValue(value, decimals(name));
     }
   );
@@ -257,7 +249,7 @@ const saveWaterModalForm = (event) => {
 };
 
 // Checklist Modal
-const updateChecklistRow = (row, fromRow) => {
+const updateChecklistRow = (row, data) => {
   const quantSpan = row.querySelector("span[name=quantity]");
   const uSpan = row.querySelector("span[name=u]");
   const qualSelect = row.querySelector("select[name=quality]");
@@ -274,11 +266,10 @@ const updateChecklistRow = (row, fromRow) => {
   qualSelect.disabled = checkedOff;
 
   // If updated externally by change of the underlying fert table row
-  if (fromRow) {
-    row.querySelector("span[name=name]").textContent =
-      fromRow.querySelector("select[name=fertilizer]").selectedOptions[0].text;
-    quantSpan.dataset.original = toFloat(fromRow.querySelector("input[name=dose]").value);
-    uSpan.dataset.original = fromRow.querySelector("span[name=u]").textContent;
+  if (data) {
+    row.querySelector("span[name=name]").textContent = data.name;
+    quantSpan.dataset.original = data.dose;
+    uSpan.dataset.original = data.u;
   }
 
   quantSpan.textContent = formatValue(round(quantSpan.dataset.original * quality * checklistMultiplier));

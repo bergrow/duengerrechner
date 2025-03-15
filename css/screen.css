@@ -1,7 +1,7 @@
 :root {
   --pico-font-size: 68.75%;
   --first-col-width: 12rem;
-  --second-col-width: 6.5rem;
+  --second-col-width: 8.5rem;
 }
 @media (min-width: 576px) {
   :root {
@@ -18,7 +18,6 @@
   :root {
     --pico-font-size: 87.5%;
     --first-col-width: 20rem;
-    --second-col-width: 7rem;
   }
   .container-fluid {
     max-width: 93.75%;
@@ -37,7 +36,6 @@
   :root {
     --pico-font-size: 100%;
     --first-col-width: 26rem;
-    --second-col-width: 7.5rem;
   }
   .container-fluid {
     max-width: 81.25%;
@@ -48,10 +46,19 @@
 .dropdown {
   margin: 0 !important;
 }
+
+/* Header */
+header > div {
+  display: none;
+}
+
+/* Tables */
+table {
+  table-layout: fixed;
+}
 .first-col {
   width: var(--first-col-width);
 }
-/* Tables */
 .second-col {
   width: var(--second-col-width);
 }
@@ -82,15 +89,43 @@
 .last-col button {
   min-width: 1.5rem;
 }
+.n-form {
+  --pico-font-size: 0.875em;
+}
+div.input-container {
+  position: relative;
+  display: inline-block;
+}
+div.input-container::after {
+  position: absolute;
+  bottom: calc(var(--pico-form-element-spacing-vertical) + var(--pico-border-width) + 0.1rem);
+  right: 0.5rem;
+  transition: all 0.05s ease-in-out;
+}
+div.input-container:hover::after,
+div.input-container:focus-within::after {
+  right: 1.75rem;
+}
+@supports (-moz-appearance: none) {
+  div::after {
+    right: 1.75rem;
+  }
+}
+div.percent::after {
+  content: "%";
+}
+div.milliliter::after {
+  content: "ml";
+}
+div.gram::after {
+  content: "g";
+}
+
 #water-table > tr:first-of-type > th,
 #water-table > tr:first-of-type > td {
   --pico-border-width: 0.1875rem;
   --pico-font-weight: 600;
   padding-top: var(--pico-block-spacing-vertical);
-}
-
-.n-form {
-  --pico-font-size: 0.875em;
 }
 
 /* Table Footer */
@@ -110,13 +145,12 @@ tfoot th {
 /* Helpers */
 .shrink {
   --pico-spacing: 0.5rem;
-  table-layout: fixed;
+  --pico-form-element-spacing-vertical: 0.25rem;
+  --pico-form-element-spacing-horizontal: 0.25rem;
 }
 .shrink input,
 .shrink select,
 .shrink button {
-  --pico-form-element-spacing-vertical: 0.25rem;
-  --pico-form-element-spacing-horizontal: 0.25rem;
   margin-top: 0.1rem;
   margin-bottom: 0.1rem;
 }
@@ -153,4 +187,8 @@ tfoot th {
 }
 footer p {
   color: var(--pico-muted-color);
+  text-align: right;
+}
+footer > p {
+  display: none;
 }

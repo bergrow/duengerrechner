@@ -37,7 +37,7 @@
         <img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" />
         <hgroup>
           <h1>bergrows Düngerrechner</h1>
-          <p>Version 2.6.2 <small>(2025-01-24)</small></p>
+          <p>Version 3.0 pre-release <small>(2025-03-16)</small></p>
         </hgroup>
         <ul>
           <li>
@@ -90,7 +90,11 @@
         </ul>
       </nav>
       <div>
-
+        <img src="assets/images/icon.png" />
+        <hgroup>
+          <h1>Düngeplan</h1>
+          <p>vom TT.MM.JJJJ</p>
+        </hgroup>
       </div>
     </header>
     <main class="container-fluid">
@@ -100,9 +104,9 @@
             <tr>
               <td class="first-col"></td>
               <td class="second-col"></td>
-              <th class="macro" colspan="6">MAKRONÄHRSTOFFE</td>
-              <th class="macro n-form hidden" colspan="4"></td>
-              <th class="micro hidden" colspan="6">MIKRONÄHRSTOFFE</td>
+              <th class="macro" colspan="6">MAKRONÄHRSTOFFE</th>
+              <th class="macro n-form hidden" colspan="4"></th>
+              <th class="micro hidden" colspan="6">MIKRONÄHRSTOFFE</th>
               <td id="scroll-buttons" class="last-col">
                 <button class="outline contrast" onclick="showMacros(event)" disabled>◀</button>
                 <button class="outline contrast" onclick="showMicros(event)">▶</button>
@@ -140,8 +144,10 @@
                 <span class="hidden" name="name"></span>
               </td>
               <td class="second-col">
-                <input type="number" name="dose" aria-label="Dosierung" step=".1" min="0" />
-                <span class="hidden" name="dose"></span> <span name="u"></span>
+                <div class="input-container">
+                  <input type="number" name="dose" aria-label="Dosierung" step=".1" min="0" />
+                </div>
+                <span class="hidden" name="dose"></span>
               </td>
               <td class="macro"><span name="n" data-value="0"></span></td>
               <td class="macro n-form hidden"><span name="n-no3" data-value="0"></span></td>
@@ -177,16 +183,18 @@
             <tr data-type="water" id="water-row">
               <td>Leitungswasser</td>
               <td class="second-col">
-                <input
-                  type="number"
-                  name="dilution"
-                  aria-label="Verdünnung in %"
-                  step="5"
-                  min="0"
-                  max="100"
-                  value="0"
-                />
-                %
+                <div class="input-container percent">
+                  <input
+                    type="number"
+                    name="dilution"
+                    aria-label="Verdünnung in %"
+                    step="5"
+                    min="0"
+                    max="100"
+                    value="25"
+                  />
+                </div>
+                <span class="hidden" name="dilution"></span>
               </td>
               <td class="macro"><span name="n" data-value="0"></span></td>
               <td class="macro n-form hidden" colspan="4"></td>
@@ -686,7 +694,7 @@
         </details>
         <p>Have fun and grow on! ✌️🏔️</p>
       </div>
-      <p>erstellt mit <b>bergrows Düngerrechner</b> v2.6.2</p>
+      <p>erstellt mit <b>bergrows Düngerrechner</b> v3.0</p>
     </footer>
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
     <noscript>

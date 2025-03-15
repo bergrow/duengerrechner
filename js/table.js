@@ -13,9 +13,9 @@ const updateRow = (row, data, multiplier = 1) => {
   row.querySelectorAll("span").forEach((span) => {
     const name = span.getAttribute("name");
     let value = data[name];
-    value = isNaN(value) ? value : round(value * multiplier, 3);
+    value = isString(value) ? value : round(value * multiplier, 3);
     span.dataset.value = value;
-    span.textContent = isNaN(value) ? value : formatValue(value, decimals(name));
+    span.textContent = isString(value) ? value : formatValue(value, decimals(name));
   });
 };
 
@@ -25,6 +25,7 @@ const removeRow = (tbody, appendix = null) => {
 };
 
 const clearRow = (row) => {
+  row.querySelector("div.input-container")?.classList.remove("milliliter", "gram");
   row.querySelectorAll("select").forEach((select) => (select.selectedIndex = 0));
   row.querySelectorAll("input[type=number]").forEach((input) => (input.value = ""));
   row.querySelectorAll("input[type=checkbox]").forEach((input) => (input.checked = false));
