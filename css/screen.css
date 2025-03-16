@@ -5,7 +5,7 @@
 }
 @media (min-width: 576px) {
   :root {
-    --pico-font-size: 75%;
+    --pico-font-size: 72.5%;
   }
 }
 @media (min-width: 768px) {
@@ -184,6 +184,10 @@ tfoot th {
 #refs > li:before {
   content: "[" counter(list) "] ";
   counter-increment: list;
+  display: inline-block;
+  --list-indent: 2.2rem;
+  width: var(--list-indent);
+  margin-left: calc(var(--list-indent) * -1);
 }
 footer p {
   color: var(--pico-muted-color);
