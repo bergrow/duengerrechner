@@ -22,13 +22,10 @@ const init = () => {
 
   const checklistRow = document.querySelector("#checklist-table tbody tr");
   checklistRow.addEventListener("input", (event) => updateChecklistRow(event.currentTarget));
-  document.querySelector("#fertilizer-table tbody tr").addEventListener("input", (event) => {
-    updateFertRow(event.currentTarget);
-    updateChecklistRow(checklistRow, event.currentTarget);
-  });
   document
-    .querySelector("#water-table tbody tr")
-    .addEventListener("input", (event) => updateWaterRow(event.currentTarget));
+    .querySelector("#fertilizer-table tr")
+    .addEventListener("input", (event) => updateFertRow(event.currentTarget, checklistRow));
+  document.querySelector("#water-row").addEventListener("input", (event) => updateWaterRow(event.currentTarget));
 
   const toggleThemeButton = document.querySelector("#toggle-theme-button");
   if (systemTheme() === "light") toggleThemeButton.classList.add("theme-toggle--toggled");
@@ -37,6 +34,12 @@ const init = () => {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
     if (!document.documentElement.dataset.theme) toggleThemeButton.classList.toggle("theme-toggle--toggled");
   });
+
+  const dateElem = document.querySelector("header > div > hgroup > p");
+  dateElem.textContent = dateElem.textContent.replace(
+    "TT.MM.JJJJ",
+    new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
+  );
 };
 
 const toggleTheme = (event) => {
@@ -67,36 +70,33 @@ const addFertilizerDropdownOption = (option) => {
 
 const addFertRow = (numRows = 1) => {
   const rowButtons = document.querySelector("#fertilizer-row-buttons");
-  const tbody = document.querySelector("#fertilizer-table tbody");
+  const tbody = document.querySelector("#fertilizer-table");
   for (let i = 0; i < numRows; i++) {
     const checklistRow = addRow(document.querySelector("#checklist-table tbody"), (event) =>
       updateChecklistRow(event.currentTarget)
     );
-    const row = addRow(
-      tbody,
-      (event) => {
-        updateFertRow(event.currentTarget);
-        updateChecklistRow(checklistRow, event.currentTarget);
-      },
-      rowButtons
-    );
+    const row = addRow(tbody, (event) => updateFertRow(event.currentTarget, checklistRow), rowButtons);
   }
   rowButtons.querySelectorAll("button")[1].disabled = false;
 };
 
-const updateFertRow = (row) => {
+const updateFertRow = (row, checklistRow) => {
   const data = fertData
     .concat(customFertData)
     .find((item) => item.id == row.querySelector("select[name=fertilizer]").selectedOptions[0].value);
   if (data === undefined) return;
   const dose = toFloat(row.querySelector("input[name=dose]").value);
-  updateRow(row, data, dose);
+  const inputContainer = row.querySelector("div.input-container");
+  inputContainer.classList.remove("milliliter", "gram");
+  inputContainer.classList.add(data.u === "g" ? "gram" : "milliliter");
+  updateRow(row, { dose: `${formatValue(dose, 2, data.u)}`, ...data }, dose);
+  updateChecklistRow(checklistRow, { dose, ...data });
   updateSums();
 };
 
 const removeFertRow = () => {
   const rowButtons = document.querySelector("#fertilizer-row-buttons");
-  const tbody = document.querySelector("#fertilizer-table tbody");
+  const tbody = document.querySelector("#fertilizer-table");
   removeRow(tbody, rowButtons);
   if (tbody.querySelectorAll("tr").length === 1) rowButtons.querySelectorAll("button")[1].disabled = true;
   removeRow(document.querySelector("#checklist-table tbody"));
@@ -111,21 +111,22 @@ const updateWaterRow = (row) => {
     ...waterData,
   };
   const dilution = toFloat(row.querySelector("input[name=dilution]").value);
-  updateRow(row, data, 1 - dilution / 100);
+  const dilutionStr = dilution === 0 ? "unverdünnt" : formatValue(dilution, 0, "%");
+  updateRow(row, { dilution: dilutionStr, ...data }, 1 - dilution / 100);
   updateSums();
 };
 
 const updateSums = () => {
-  let n;
+  let nSum;
   ["n", "n-no3", "n-nh4", "n-nu", "n-org", "p", "k", "ca", "mg", "s", "b", "cu", "fe", "mn", "mo", "zn"].forEach(
     (name) => {
       let value = Array.from(
         document.querySelectorAll(`span[name=${name}]`),
         (elem) => parseFloat(elem.dataset.value) || 0
       ).reduce((a, c) => a + c, 0);
-      if (name === "n") n = value;
+      if (name === "n") nSum = value;
       document.querySelector(`#${name}-sum`).textContent = ["n-no3", "n-nh4", "n-nu", "n-org"].includes(name)
-        ? `${formatValue((value / n) * 100, 0)} %`
+        ? `${formatValue((value / nSum) * 100, 0, "%", "0")}`
         : formatValue(value, decimals(name));
     }
   );
@@ -248,7 +249,7 @@ const saveWaterModalForm = (event) => {
 };
 
 // Checklist Modal
-const updateChecklistRow = (row, fromRow) => {
+const updateChecklistRow = (row, data) => {
   const quantSpan = row.querySelector("span[name=quantity]");
   const uSpan = row.querySelector("span[name=u]");
   const qualSelect = row.querySelector("select[name=quality]");
@@ -265,11 +266,10 @@ const updateChecklistRow = (row, fromRow) => {
   qualSelect.disabled = checkedOff;
 
   // If updated externally by change of the underlying fert table row
-  if (fromRow) {
-    row.querySelector("span[name=name]").textContent =
-      fromRow.querySelector("select[name=fertilizer]").selectedOptions[0].text;
-    quantSpan.dataset.original = toFloat(fromRow.querySelector("input[name=dose]").value);
-    uSpan.dataset.original = fromRow.querySelector("span[name=u]").textContent;
+  if (data) {
+    row.querySelector("span[name=name]").textContent = data.name;
+    quantSpan.dataset.original = data.dose;
+    uSpan.dataset.original = data.u;
   }
 
   quantSpan.textContent = formatValue(round(quantSpan.dataset.original * quality * checklistMultiplier));
@@ -286,57 +286,3 @@ const resetCalculator = (event) => {
 const updateChecklistMultiplier = (event) => {
   document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
 };
-
-// Table functions
-const addRow = (tbody, eventHandler, appendix = null) => {
-  if (appendix) appendix.parentNode.removeChild(appendix);
-  let newRow = tbody.querySelector("tr:last-of-type").cloneNode(true);
-  clearRow(newRow);
-  if (eventHandler) newRow.addEventListener("input", eventHandler);
-  tbody.appendChild(newRow);
-  if (appendix) tbody.querySelector("tr:last-of-type").appendChild(appendix);
-  return newRow;
-};
-
-const updateRow = (row, data, multiplier = 1) => {
-  row.querySelectorAll("span").forEach((span) => {
-    const name = span.getAttribute("name");
-    let value = data[name];
-    value = isNaN(value) ? value : round(value * multiplier, 3);
-    span.dataset.value = value;
-    span.textContent = isNaN(value) ? value : formatValue(value, decimals(name));
-  });
-};
-
-const removeRow = (tbody, appendix = null) => {
-  tbody.removeChild(tbody.querySelector("tr:last-of-type"));
-  if (appendix) tbody.querySelector("tr:last-of-type").appendChild(appendix);
-};
-
-const clearRow = (row) => {
-  row.querySelectorAll("select").forEach((select) => (select.selectedIndex = 0));
-  row.querySelectorAll("input[type=number]").forEach((input) => (input.value = ""));
-  row.querySelectorAll("input[type=checkbox]").forEach((input) => (input.checked = false));
-  row.querySelectorAll("span").forEach((span) => {
-    span.textContent = "";
-    span.classList.remove("checked-off");
-    if ("value" in span.dataset) span.dataset.value = 0;
-    if ("original" in span.dataset) span.dataset.original = "";
-  });
-};
-
-// Helper functions
-const delimiter = () => {
-  const delimiter = new Option("———", "-1");
-  delimiter.disabled = true;
-  return delimiter;
-};
-const decimals = (name) => ("n-no3n-nh4n-nun-orgpkcamgsghkh".match(name) ? 1 : 2);
-const formatValue = (value, decimals) => {
-  const formattingSettings = { maximumFractionDigits: decimals, minimumFractionDigits: decimals };
-  return value && value !== 0 ? value.toLocaleString(undefined, formattingSettings) : "-";
-};
-const round = (v, p = 2) => toFloat(v.toFixed(p));
-const toFloat = (str, def = 0) => parseFloat(str) || def;
-const calcGH = (ca, mg) => ca * 0.14 + mg * 0.2307;
-const calcKH = (ks) => (ks === 0 ? 0 : (ks - 0.05) * 2.8);
