@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="light " />
     <meta
       property="og:description"
       content="Das 'Schweizer Taschenmesser' für deine Cannabis-Düngung, mit über 180 Düngern in der Datenbank, Berücksichtigung deiner individuellen Wasserwerte und basierend auf aktuellen wissenschaftlichen Erkenntnissen zur Cannabiszucht."
@@ -12,28 +12,33 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/classic.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/classic.min.css"
+      media="screen"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css"
+      media="screen"
+    />
+    <link rel="stylesheet" href="css/screen.css" media="screen" />
+    <link rel="stylesheet" href="css/print.css" media="print" />
     <script src="js/modal.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/helper.js"></script>
     <script src="js/fertilizers.js"></script>
     <script src="js/calculator.js"></script>
     <title>bergrows Düngerrechner</title>
   </head>
   <body onload="init()">
-    <header class="main-header container">
+    <header class="main-header container-fluid">
       <nav>
-        <ul>
-          <li><img width="50" src="assets/images/icon.png" /></li>
-        </ul>
-        <ul>
-          <li>
-            <hgroup>
-              <h1>bergrows Düngerrechner</h1>
-              <p>Version 2.6.2 <small>(2025-01-24)</small></p>
-            </hgroup>
-          </li>
-        </ul>
+        <img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" />
+        <hgroup>
+          <h1>bergrows Düngerrechner</h1>
+          <p>Version 3.0 pre-release <small>(2025-03-16)</small></p>
+        </hgroup>
         <ul>
           <li>
             <button
@@ -84,17 +89,24 @@
           </li>
         </ul>
       </nav>
+      <div>
+        <img src="assets/images/icon.png" />
+        <hgroup>
+          <h1>Düngeplan</h1>
+          <p>vom TT.MM.JJJJ</p>
+        </hgroup>
+      </div>
     </header>
-    <main class="container">
+    <main class="container-fluid">
       <section>
-        <table id="fertilizer-table" class="shrink">
+        <table class="shrink">
           <thead>
             <tr>
               <td class="first-col"></td>
               <td class="second-col"></td>
-              <td class="macro" colspan="6"><u>MAKRO</u></td>
-              <td class="macro n-form hidden" colspan="4"></td>
-              <td class="micro hidden" scope="col" colspan="6"><u>MIKRO</u></td>
+              <th class="macro" colspan="6">MAKRONÄHRSTOFFE</th>
+              <th class="macro n-form hidden" colspan="4"></th>
+              <th class="micro hidden" colspan="6">MIKRONÄHRSTOFFE</th>
               <td id="scroll-buttons" class="last-col">
                 <button class="outline contrast" onclick="showMacros(event)" disabled>◀</button>
                 <button class="outline contrast" onclick="showMicros(event)">▶</button>
@@ -103,7 +115,7 @@
             <tr>
               <th scope="col">Dünger</th>
               <th scope="col">Dosierung</th>
-              <th class="macro slim" scope="col">
+              <th class="macro" scope="col">
                 N<a href="#" class="toggle-button" onclick="toggleNForm(event)">&nbsp;</a>
               </th>
               <th class="macro slim n-form hidden" scope="col">N-NO3</th>
@@ -123,15 +135,19 @@
               <th class="micro hidden" scope="col">Zn</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="fertilizer-table">
             <tr data-type="fertilizer">
               <td>
                 <select name="fertilizer" aria-label="Dünger auswählen" required>
                   <option selected disabled value="-1">Dünger auswählen</option>
                 </select>
+                <span class="hidden" name="name"></span>
               </td>
               <td class="second-col">
-                <input type="number" name="dose" aria-label="Dosierung" step=".1" min="0" /> <span name="u"></span>
+                <div class="input-container">
+                  <input type="number" name="dose" aria-label="Dosierung" step=".1" min="0" />
+                </div>
+                <span class="hidden" name="dose"></span>
               </td>
               <td class="macro"><span name="n" data-value="0"></span></td>
               <td class="macro n-form hidden"><span name="n-no3" data-value="0"></span></td>
@@ -155,11 +171,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
-      </section>
-      <section>
-        <table id="water-table" class="shrink">
-          <thead>
+          <tbody id="water-table">
             <tr>
               <th scope="col" class="first-col">Wasser</th>
               <th scope="col" class="second-col">verdünnt</th>
@@ -168,21 +180,21 @@
               <td class="micro hidden" colspan="6"></td>
               <td class="last-col"></td>
             </tr>
-          </thead>
-          <tbody>
             <tr data-type="water" id="water-row">
               <td>Leitungswasser</td>
               <td class="second-col">
-                <input
-                  type="number"
-                  name="dilution"
-                  aria-label="Verdünnung in %"
-                  step="5"
-                  min="0"
-                  max="100"
-                  value="0"
-                />
-                %
+                <div class="input-container percent">
+                  <input
+                    type="number"
+                    name="dilution"
+                    aria-label="Verdünnung in %"
+                    step="5"
+                    min="0"
+                    max="100"
+                    value="25"
+                  />
+                </div>
+                <span class="hidden" name="dilution"></span>
               </td>
               <td class="macro"><span name="n" data-value="0"></span></td>
               <td class="macro n-form hidden" colspan="4"></td>
@@ -191,16 +203,18 @@
               <td class="macro"><span name="ca" data-value="0"></span></td>
               <td class="macro"><span name="mg" data-value="0"></span></td>
               <td class="macro"><span name="s" data-value="0"></span></td>
-              <td class="micro hidden" colspan="3"><b>Gesamthärte: </b><span name="gh" data-value="0">-</span> °dH</td>
               <td class="micro hidden" colspan="3">
-                <b>Karbonathärte: </b><span name="kh" data-value="0">-</span> °dH
+                <b>Gesamthärte: </b><span name="gh" data-value="0">-</span>&nbsp;°dH
+              </td>
+              <td class="micro hidden" colspan="3">
+                <b>Karbonathärte: </b><span name="kh" data-value="0">-</span>&nbsp;°dH
               </td>
               <td class="last-col"></td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th scope="row" colspan="2">Summe <span class="slim">(mg/l)</span></th>
+              <th scope="row" colspan="2"><b>Summe</b> (mg/l)</th>
               <td class="macro"><span id="n-sum"></span></td>
               <td class="macro slim n-form hidden"><span id="n-no3-sum"></span></td>
               <td class="macro slim n-form hidden"><span id="n-nh4-sum"></span></td>
@@ -219,12 +233,8 @@
               <td class="micro hidden"><span id="zn-sum"></span></td>
               <td class="last-col"></td>
             </tr>
-          </tfoot>
-        </table>
-        <table id="opt-ranges" class="shrink">
-          <tbody>
-            <tr>
-              <th class="first-two-col">
+            <tr id="opt-ranges">
+              <th colspan="2">
                 Optimale Bereiche für mineralische Düngung in der
                 <select style="width: 7.5rem" name="stage" oninput="changeOptRanges()">
                   <option value="veg">vegetativen</option>
@@ -289,7 +299,7 @@
               <td class="micro hidden">0,12 - 0,4</td>
               <td class="last-col"></td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
       </section>
       <button type="button" data-target="checklist-modal" onclick="toggleModal(event)">Gießcheckliste anzeigen</button>
@@ -556,7 +566,7 @@
         </article>
       </dialog>
     </main>
-    <footer class="container">
+    <footer class="container-fluid">
       <div class="grid">
         <details>
           <summary>Quellen</summary>
@@ -682,9 +692,9 @@
             </li>
           </ul>
         </details>
+        <p>Have fun and grow on! ✌️🏔️</p>
       </div>
-      <p>Have fun and grow on! ✌️🏔️</p>
-      <p></p>
+      <p>erstellt mit <b>bergrows Düngerrechner</b> v3.0</p>
     </footer>
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
     <noscript>

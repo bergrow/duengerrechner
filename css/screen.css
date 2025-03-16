@@ -1,0 +1,194 @@
+:root {
+  --pico-font-size: 68.75%;
+  --first-col-width: 12rem;
+  --second-col-width: 8.5rem;
+}
+@media (min-width: 576px) {
+  :root {
+    --pico-font-size: 75%;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --pico-font-size: 81.25%;
+    --first-col-width: 17rem;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --pico-font-size: 87.5%;
+    --first-col-width: 20rem;
+  }
+  .container-fluid {
+    max-width: 93.75%;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --pico-font-size: 93.75%;
+    --first-col-width: 23rem;
+  }
+  .container-fluid {
+    max-width: 87.5%;
+  }
+}
+@media (min-width: 1536px) {
+  :root {
+    --pico-font-size: 100%;
+    --first-col-width: 26rem;
+  }
+  .container-fluid {
+    max-width: 81.25%;
+  }
+}
+
+/* Fixes misalignment in FireFox */
+.dropdown {
+  margin: 0 !important;
+}
+
+/* Header */
+header > div {
+  display: none;
+}
+
+/* Tables */
+table {
+  table-layout: fixed;
+}
+.first-col {
+  width: var(--first-col-width);
+}
+.second-col {
+  width: var(--second-col-width);
+}
+.second-col input {
+  width: calc(var(--second-col-width) - 2.5rem);
+}
+.toggle-button {
+  text-decoration: none;
+  display: inline-block;
+  width: 1rem;
+  margin-inline-start: 0.5rem;
+  transform: rotate(-90deg);
+  background-image: var(--pico-icon-chevron);
+  background-position: right center;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+  transition: transform var(--pico-transition);
+}
+.toggle-button[toggled] {
+  transform: rotate(90deg);
+}
+.last-col {
+  width: 4.5rem;
+  border: 0;
+  text-align: center;
+  --pico-border-width: 0.0625rem;
+}
+.last-col button {
+  min-width: 1.5rem;
+}
+.n-form {
+  --pico-font-size: 0.875em;
+}
+div.input-container {
+  position: relative;
+  display: inline-block;
+}
+div.input-container::after {
+  position: absolute;
+  bottom: calc(var(--pico-form-element-spacing-vertical) + var(--pico-border-width) + 0.1rem);
+  right: 0.5rem;
+  transition: all 0.05s ease-in-out;
+}
+div.input-container:hover::after,
+div.input-container:focus-within::after {
+  right: 1.75rem;
+}
+@supports (-moz-appearance: none) {
+  div::after {
+    right: 1.75rem;
+  }
+}
+div.percent::after {
+  content: "%";
+}
+div.milliliter::after {
+  content: "ml";
+}
+div.gram::after {
+  content: "g";
+}
+
+#water-table > tr:first-of-type > th,
+#water-table > tr:first-of-type > td {
+  --pico-border-width: 0.1875rem;
+  --pico-font-weight: 600;
+  padding-top: var(--pico-block-spacing-vertical);
+}
+
+/* Table Footer */
+tfoot th {
+  --pico-font-weight: 400;
+}
+#opt-ranges th,
+#opt-ranges td {
+  --pico-font-weight: 400;
+  padding-top: var(--pico-block-spacing-vertical);
+  border: none;
+}
+#opt-ranges select {
+  --pico-border-width: 0.0625rem;
+}
+
+/* Helpers */
+.shrink {
+  --pico-spacing: 0.5rem;
+  --pico-form-element-spacing-vertical: 0.25rem;
+  --pico-form-element-spacing-horizontal: 0.25rem;
+}
+.shrink input,
+.shrink select,
+.shrink button {
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+}
+.shrink select {
+  padding-right: calc(var(--pico-form-element-spacing-horizontal) + 1.25rem);
+  padding-inline-end: calc(var(--pico-form-element-spacing-horizontal) + 1.25rem);
+  background-position: center right 0.25rem;
+}
+.hidden {
+  display: none;
+}
+
+/* Modals */
+#water-modal select,
+#water-modal input[type="text"] {
+  width: 50%;
+}
+#checklist-modal select {
+  margin-bottom: 0;
+}
+.checked-off span {
+  color: var(--pico-muted-color);
+  text-decoration: line-through;
+}
+#refs {
+  counter-reset: list;
+}
+#refs > li {
+  list-style: none;
+}
+#refs > li:before {
+  content: "[" counter(list) "] ";
+  counter-increment: list;
+}
+footer p {
+  color: var(--pico-muted-color);
+  text-align: right;
+}
+footer > p {
+  display: none;
+}
