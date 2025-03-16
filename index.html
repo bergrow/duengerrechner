@@ -37,7 +37,7 @@
         <img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" />
         <hgroup>
           <h1>bergrows Düngerrechner</h1>
-          <p>Version 3.0 pre-release <small>(2025-03-16)</small></p>
+          <p>Version 2.7 <small>(2025-03-16)</small></p>
         </hgroup>
         <ul>
           <li>
@@ -191,7 +191,7 @@
                     step="5"
                     min="0"
                     max="100"
-                    value="25"
+                    value="0"
                   />
                 </div>
                 <span class="hidden" name="dilution"></span>
@@ -309,7 +309,6 @@
             <button aria-label="Close" rel="prev" data-target="new-fert-modal" onclick="toggleModal(event)"></button>
             <h3>📝 Neuen Dünger anlegen</h3>
           </header>
-
           <form id="new-fert-modal-form" data-target="new-fert-modal" onsubmit="saveNewFertilizerForm(event)">
             <fieldset class="grid">
               <label
@@ -522,9 +521,9 @@
           <table id="checklist-table">
             <thead>
               <tr>
-                <th scope="col" style="width: 50%">Dünger</th>
-                <th scope="col" style="width: 30%">Form</th>
-                <th scope="col" style="width: 15%">Menge</th>
+                <th scope="col" style="width: 45%">Dünger</th>
+                <th scope="col" style="width: 35%">Form</th>
+                <th scope="col" style="width: 13%">Menge</th>
                 <td></td>
               </tr>
             </thead>
@@ -571,95 +570,98 @@
         <details>
           <summary>Quellen</summary>
           <ol id="refs">
-            <li>
-              Saloner A, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) to Nitrogen Supply Under Long
+            <li
+              >Saloner A, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) to Nitrogen Supply Under Long
               Photoperiod. <i>Front Plant Sci.</i> 2020;11:572293. doi:<a
                 href="https://doi.org/10.3389/fpls.2020.572293"
                 >10.3389/fpls.2020.572293</a
               >
             </li>
-            <li>
-              Saloner A, Bernstein N. Nitrogen supply affects cannabinoid and terpenoid profile in medical cannabis
+            <li
+              >Saloner A, Bernstein N. Nitrogen supply affects cannabinoid and terpenoid profile in medical cannabis
               (Cannabis sativa L.). <i>Industrial Crops and Products.</i> 2021;167:113516. doi:<a
                 href="https://doi.org/10.1016/j.indcrop.2021.113516"
                 >10.1016/j.indcrop.2021.113516</a
               >
             </li>
-            <li>
-              Shiponi S, Bernstein N. Response of medical cannabis (Cannabis sativa L.) genotypes to P supply under long
-              photoperiod: Functional phenotyping and the ionome. <i>Industrial Crops and Products.</i> 2021;161:113154.
-              doi:<a href="https://doi.org/10.1016/j.indcrop.2020.113154">10.1016/j.indcrop.2020.113154</a>
+            <li
+              >Shiponi S, Bernstein N. Response of medical cannabis (Cannabis sativa L.) genotypes to P supply under
+              long photoperiod: Functional phenotyping and the ionome.
+              <i>Industrial Crops and Products.</i> 2021;161:113154. doi:<a
+                href="https://doi.org/10.1016/j.indcrop.2020.113154"
+                >10.1016/j.indcrop.2020.113154</a
+              >
             </li>
-            <li>
-              Shiponi S, Bernstein N. The Highs and Lows of P Supply in Medical Cannabis: Effects on Cannabinoids, the
+            <li
+              >Shiponi S, Bernstein N. The Highs and Lows of P Supply in Medical Cannabis: Effects on Cannabinoids, the
               Ionome, and Morpho-Physiology. <i>Front Plant Sci.</i> 2021;12:657323. doi:<a
                 href="https://doi.org/10.3389/fpls.2021.657323"
                 >10.3389/fpls.2021.657323</a
               >
             </li>
-            <li>
-              Saloner A, Sacks MM, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) Genotypes to K Supply
+            <li
+              >Saloner A, Sacks MM, Bernstein N. Response of Medical Cannabis (Cannabis sativa L.) Genotypes to K Supply
               Under Long Photoperiod. <i>Front Plant Sci.</i> 2019;10:1369. doi:<a
                 href="https://doi.org/10.3389/fpls.2019.01369"
                 >10.3389/fpls.2019.01369</a
               >
             </li>
-            <li>
-              Saloner A, Bernstein N. Effect of Potassium (K) Supply on Cannabinoids, Terpenoids and Plant Function in
+            <li
+              >Saloner A, Bernstein N. Effect of Potassium (K) Supply on Cannabinoids, Terpenoids and Plant Function in
               Medical Cannabis. <i>Agronomy.</i> 2022;12(5):1242. doi:<a href="https://doi.org/10.3390/agronomy12051242"
                 >10.3390/agronomy12051242</a
               >
             </li>
-            <li>
-              Zheng Y. <i>Handbook of Cannabis Production in Controlled Environments.</i> 1st ed. CRC Press; 2022.
+            <li
+              >Zheng Y. <i>Handbook of Cannabis Production in Controlled Environments.</i> 1st ed. CRC Press; 2022.
               doi:<a href="https://doi.org/10.1201/9781003150442">10.1201/9781003150442</a>
             </li>
-            <li>
-              Cockson P, Schroeder-Moreno M, Veazie P, et al. Impact of Phosphorus on Cannabis sativa Reproduction,
+            <li
+              >Cockson P, Schroeder-Moreno M, Veazie P, et al. Impact of Phosphorus on Cannabis sativa Reproduction,
               Cannabinoids, and Terpenes. <i>Applied Sciences.</i> 2020;10(21):7875. doi:<a
                 href="https://doi.org/10.3390/app10217875"
                 >10.3390/app10217875</a
               >
             </li>
-            <li>
-              Bevan L, Jones M, Zheng Y. Optimisation of Nitrogen, Phosphorus, and Potassium for Soilless Production of
+            <li
+              >Bevan L, Jones M, Zheng Y. Optimisation of Nitrogen, Phosphorus, and Potassium for Soilless Production of
               Cannabis sativa in the Flowering Stage Using Response Surface Analysis.
               <i>Front Plant Sci.</i> 2021;12:764103. doi:<a href="https://doi.org/10.3389/fpls.2021.764103"
                 >10.3389/fpls.2021.764103</a
               >
             </li>
-            <li>
-              Veazie P, Cockson P, Logan D, Whipker B. Magnesium’s Impact on Cannabis sativa ‘BaOx’ and ‘Suver Haze’
+            <li
+              >Veazie P, Cockson P, Logan D, Whipker B. Magnesium’s Impact on Cannabis sativa ‘BaOx’ and ‘Suver Haze’
               Growth and Cannabinoid Production. <i>Journal of Agricultural Hemp Research.</i> 2021;2. doi:<a
                 href="https://doi.org/10.61611/2688-5182.1018"
                 >10.61611/2688-5182.1018</a
               >
             </li>
-            <li>
-              Wei X, Zhou W, Long S, et al. Effects of Different N, P, and K Rates on the Growth and Cannabinoid Content
-              of Industrial Hemp. <i>Journal of Natural Fibers.</i> 2023;20(1):2159605. doi:<a
+            <li
+              >Wei X, Zhou W, Long S, et al. Effects of Different N, P, and K Rates on the Growth and Cannabinoid
+              Content of Industrial Hemp. <i>Journal of Natural Fibers.</i> 2023;20(1):2159605. doi:<a
                 href="10.1080/15440478.2022.2159605"
                 >10.1080/15440478.2022.2159605</a
               >
             </li>
-            <li>
-              Veazie P, Cockson P, Kidd D, Whip B. Elevated Phosphorus Fertility Impact on Cannabis sativa ‘BaOx’ Growth
-              and Nutrient Accumulation.
+            <li
+              >Veazie P, Cockson P, Kidd D, Whip B. Elevated Phosphorus Fertility Impact on Cannabis sativa ‘BaOx’
+              Growth and Nutrient Accumulation.
               <i>International Journal of Innovative Science, Engineering & Technology.</i> 2021;8(2).
             </li>
-            <li>
-              Morad D, Bernstein N. Response of Medical Cannabis to Magnesium (Mg) Supply at the Vegetative Growth
+            <li
+              >Morad D, Bernstein N. Response of Medical Cannabis to Magnesium (Mg) Supply at the Vegetative Growth
               Phase. <i>Plants.</i> 2023;12(14):2676. doi:<a href="https://doi.org/10.3390/plants12142676"
                 >10.3390/plants12142676</a
               >
             </li>
-            <li>
-              Westmoreland FM, Bugbee B. Sustainable Cannabis Nutrition: Elevated root-zone phosphorus significantly
+            <li
+              >Westmoreland FM, Bugbee B. Sustainable Cannabis Nutrition: Elevated root-zone phosphorus significantly
               increases leachate P and does not improve yield or quality. <i>Front Plant Sci.</i> 2022;13:1015652.
               doi:<a href="https://doi.org/10.3389/fpls.2022.1015652">10.3389/fpls.2022.1015652</a>
             </li>
-            <li>
-              Saloner A, Bernstein, N.. Nitrogen Source Matters: High NH4/NO3 Ratio Reduces Cannabinoids, Terpenoids,
+            <li
+              >Saloner A, Bernstein, N.. Nitrogen Source Matters: High NH4/NO3 Ratio Reduces Cannabinoids, Terpenoids,
               and Yield in Medical Cannabis. <i>Front Plant Sci.</i> 2022;13:830224. doi:<a
                 href="https://doi.org/10.3389/fpls.2022.830224"
                 >10.3389/fpls.2022.830224</a
@@ -694,7 +696,7 @@
         </details>
         <p>Have fun and grow on! ✌️🏔️</p>
       </div>
-      <p>erstellt mit <b>bergrows Düngerrechner</b> v3.0</p>
+      <p>erstellt mit <b>bergrows Düngerrechner</b> v2.7</p>
     </footer>
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
     <noscript>
