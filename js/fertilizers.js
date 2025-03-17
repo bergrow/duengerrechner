@@ -3864,3 +3864,5 @@ const fertData = [
     u: "g",
   },
 ];
+var customFertData = JSON.parse(localStorage.getItem("customFertData")) || [];
+const allFertData = () => fertData.concat(customFertData);

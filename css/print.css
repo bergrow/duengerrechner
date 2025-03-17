@@ -9,11 +9,11 @@
 header > nav,
 main > dialog,
 main > button,
-select,
-input,
-#opt-ranges,
+.dropdown,
+.input-container,
 .last-col,
 .toggle-button,
+#opt-ranges,
 footer > div {
   display: none;
 }

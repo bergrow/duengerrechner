@@ -43,7 +43,7 @@
 }
 
 /* Fixes misalignment in FireFox */
-.dropdown {
+header .dropdown {
   margin: 0 !important;
 }
 
@@ -92,22 +92,69 @@ table {
 .n-form {
   --pico-font-size: 0.875em;
 }
-div.input-container {
+
+div.dropdown {
+  position: relative;
+}
+.dropdown-list {
+  z-index: 99;
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  overflow-y: auto;
+  max-height: 50vh;
+  margin: 0;
+  margin-top: var(--pico-outline-width);
+  padding: 0;
+  border: var(--pico-border-width) solid var(--pico-dropdown-border-color);
+  border-radius: var(--pico-border-radius);
+  background-color: var(--pico-dropdown-background-color);
+  box-shadow: var(--pico-dropdown-box-shadow);
+  color: var(--pico-dropdown-color);
+}
+.dropdown-list li {
+  list-style: none;
+  padding: calc(var(--pico-form-element-spacing-vertical) * 0.5) var(--pico-form-element-spacing-horizontal);
+  border-radius: 0;
+  color: var(--pico-dropdown-color);
+  cursor: pointer;
+}
+.dropdown-list li:hover {
+  background-color: var(--pico-dropdown-hover-background-color);
+}
+.dropdown-list mark {
+  padding: calc(var(--pico-form-element-spacing-vertical) * 0.5) 0;
+}
+.dropdown-list li.no-items {
+  color: var(--pico-muted-color);
+  cursor: default;
+  user-select: none;
+}
+.dropdown-list li.no-items:hover {
+  cursor: default;
+  background-color: var(--pico-dropdown-background-color);
+}
+
+.input-container {
   position: relative;
   display: inline-block;
 }
-div.input-container::after {
+.input-container::after {
   position: absolute;
   bottom: calc(var(--pico-form-element-spacing-vertical) + var(--pico-border-width) + 0.1rem);
   right: 0.5rem;
   transition: all 0.05s ease-in-out;
 }
-div.input-container:hover::after,
-div.input-container:focus-within::after {
+.input-container:hover::after,
+.input-container:focus-within::after {
   right: 1.75rem;
 }
 @supports (-moz-appearance: none) {
-  div::after {
+  .input-container::after {
     right: 1.75rem;
   }
 }
