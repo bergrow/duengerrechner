@@ -8,33 +8,40 @@ const convTable = {
   po4: { to: "p", factor: 0.326 },
   so4: { to: "s", factor: 0.334 },
 };
-var customFertData;
-var waterData;
+var waterData = JSON.parse(localStorage.getItem("waterData")) || {};
 
 // Init
 const init = () => {
-  customFertData = JSON.parse(localStorage.getItem("customFertData")) || [];
-  populateFertilizerDropdown();
-
-  waterData = JSON.parse(localStorage.getItem("waterData")) || {};
   populateWaterModalForm();
-  updateWaterRow(document.querySelector("#water-row"));
 
   const checklistRow = document.querySelector("#checklist-table tbody tr");
   checklistRow.addEventListener("input", (event) => updateChecklistRow(event.currentTarget));
-  document
-    .querySelector("#fertilizer-table tr")
-    .addEventListener("input", (event) => updateFertRow(event.currentTarget, checklistRow));
-  document.querySelector("#water-row").addEventListener("input", (event) => updateWaterRow(event.currentTarget));
 
+  const fertRow = document.querySelector("#fertilizer-table tr");
+  fertRow.addEventListener("input", (event) => updateFertRow(event.currentTarget, checklistRow));
+
+  const fertRowSearchInput = fertRow.querySelector("input[name=fertilizer]");
+  fertRowSearchInput.addEventListener("focus", (event) => {
+    event.currentTarget.select();
+    renderDropdownItems(event.currentTarget, allFertData());
+  });
+  fertRowSearchInput.addEventListener("input", (event) => {
+    renderDropdownItems(event.currentTarget, allFertData(), event.currentTarget.value.toLowerCase());
+  });
+
+  const waterRow = document.querySelector("#water-row");
+  waterRow.addEventListener("input", (event) => updateWaterRow(event.currentTarget));
+  updateWaterRow(waterRow);
+
+  // Theme
   const toggleThemeButton = document.querySelector("#toggle-theme-button");
   if (systemTheme() === "light") toggleThemeButton.classList.add("theme-toggle--toggled");
   toggleThemeButton.addEventListener("click", (event) => toggleTheme(event));
-
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
     if (!document.documentElement.dataset.theme) toggleThemeButton.classList.toggle("theme-toggle--toggled");
   });
 
+  // Date in Print View
   const dateElem = document.querySelector("header > div > hgroup > p");
   dateElem.textContent = dateElem.textContent.replace(
     "TT.MM.JJJJ",
@@ -50,22 +57,10 @@ const toggleTheme = (event) => {
 };
 
 // Main Table
-const populateFertilizerDropdown = () => {
-  fertData.forEach((item) => addFertilizerDropdownOption(new Option(item.name, item.id)));
-  if (customFertData.length !== 0) addFertilizerDropdownOption(delimiter());
-  customFertData.forEach((item) => addFertilizerDropdownOption(new Option(item.name, item.id)));
-};
-
 const addFertilizer = (data) => {
-  if (customFertData.length === 0) addFertilizerDropdownOption(delimiter());
   const id = 1000 + customFertData.length;
   customFertData.push({ id: id, ...data });
   localStorage.setItem("customFertData", JSON.stringify(customFertData));
-  addFertilizerDropdownOption(new Option(data.name, id));
-};
-
-const addFertilizerDropdownOption = (option) => {
-  document.querySelectorAll("select[name=fertilizer]").forEach((select) => select.appendChild(option.cloneNode(true)));
 };
 
 const addFertRow = (numRows = 1) => {
@@ -76,14 +71,20 @@ const addFertRow = (numRows = 1) => {
       updateChecklistRow(event.currentTarget)
     );
     const row = addRow(tbody, (event) => updateFertRow(event.currentTarget, checklistRow), rowButtons);
+    const rowSearchInput = row.querySelector("input[name=fertilizer]");
+    rowSearchInput.addEventListener("focus", (event) => {
+      event.currentTarget.select();
+      renderDropdownItems(event.currentTarget, allFertData());
+    });
+    rowSearchInput.addEventListener("input", (event) => {
+      renderDropdownItems(event.currentTarget, allFertData(), event.currentTarget.value.toLowerCase());
+    });
   }
   rowButtons.querySelectorAll("button")[1].disabled = false;
 };
 
 const updateFertRow = (row, checklistRow) => {
-  const data = fertData
-    .concat(customFertData)
-    .find((item) => item.id == row.querySelector("select[name=fertilizer]").selectedOptions[0].value);
+  const data = allFertData().find((item) => item.name == row.querySelector("input[name=fertilizer]").value);
   if (data === undefined) return;
   const dose = toFloat(row.querySelector("input[name=dose]").value);
   const inputContainer = row.querySelector("div.input-container");

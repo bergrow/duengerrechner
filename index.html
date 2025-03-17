@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/screen.css" media="screen" />
     <link rel="stylesheet" href="css/print.css" media="print" />
     <script src="js/modal.js"></script>
+    <script src="js/dropdown.js"></script>
     <script src="js/table.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/fertilizers.js"></script>
@@ -37,7 +38,7 @@
         <img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" />
         <hgroup>
           <h1>bergrows Düngerrechner</h1>
-          <p>Version 2.7 <small>(2025-03-16)</small></p>
+          <p>Version 2.7 <small>(2025-03-17)</small></p>
         </hgroup>
         <ul>
           <li>
@@ -138,9 +139,10 @@
           <tbody id="fertilizer-table">
             <tr data-type="fertilizer">
               <td>
-                <select name="fertilizer" aria-label="Dünger auswählen" required>
-                  <option selected disabled value="-1">Dünger auswählen</option>
-                </select>
+                <div class="dropdown">
+                  <input type="text" name="fertilizer" placeholder="Dünger auswählen" />
+                  <ul class="dropdown-list hidden"></ul>
+                </div>
                 <span class="hidden" name="name"></span>
               </td>
               <td class="second-col">
