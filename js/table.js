@@ -26,12 +26,17 @@ const removeRow = (tbody, appendix = null) => {
 
 const clearRow = (row) => {
   row.querySelector("div.input-container")?.classList.remove("milliliter", "gram");
-  row.querySelectorAll("select").forEach((select) => (select.selectedIndex = 0));
-  row.querySelectorAll("input[type=number]").forEach((input) => (input.value = ""));
-  row.querySelectorAll("input[type=checkbox]").forEach((input) => (input.checked = false));
+  row.querySelectorAll("select").forEach((select) => {
+    select.selectedIndex = 0;
+    select.disabled = false;
+  });
+  row.querySelectorAll("input").forEach((input) => {
+    input.value = "";
+    input.checked = false;
+  });
+  row.classList.remove("checked-off");
   row.querySelectorAll("span").forEach((span) => {
     span.textContent = "";
-    span.classList.remove("checked-off");
     if ("value" in span.dataset) span.dataset.value = 0;
     if ("original" in span.dataset) span.dataset.original = "";
   });

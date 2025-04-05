@@ -213,7 +213,7 @@ tfoot th {
 /* Modals */
 #water-modal select,
 #water-modal input[type="text"] {
-  width: 50%;
+  width: 70%;
 }
 #checklist-modal select {
   margin-bottom: 0;
