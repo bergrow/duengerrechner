@@ -9,7 +9,17 @@ const convTable = {
   so4: { to: "s", factor: 0.334 },
 };
 var waterData = JSON.parse(localStorage.getItem("waterData")) || {};
-
+var waterLimits = {
+  kh: 10,
+  n: 50,
+  p: 5,
+  k: 10,
+  ca: 120,
+  mg: 50,
+  s: 65,
+  na: 115,
+  cl: 140,
+};
 // Init
 const init = () => {
   populateWaterModalForm();
@@ -113,7 +123,7 @@ const updateWaterRow = (row) => {
   };
   const dilution = toFloat(row.querySelector("input[name=dilution]").value);
   const dilutionStr = dilution === 0 ? "unverdünnt" : formatValue(dilution, 0, "%");
-  updateRow(row, { dilution: dilutionStr, ...data }, 1 - dilution / 100);
+  updateRow(row, { dilution: dilutionStr, ...data }, 1 - dilution / 100, waterLimits);
   updateSums();
 };
 
