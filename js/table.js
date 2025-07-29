@@ -9,13 +9,17 @@ const addRow = (tbody, eventHandler = null, appendix = null) => {
   return newRow;
 };
 
-const updateRow = (row, data, multiplier = 1) => {
+const updateRow = (row, data, multiplier = 1, limits) => {
   row.querySelectorAll("span").forEach((span) => {
     const name = span.getAttribute("name");
     let value = data[name];
     value = isString(value) ? value : round(value * multiplier, 3);
     span.dataset.value = value;
     span.textContent = isString(value) ? value : formatValue(value, decimals(name));
+    if (!limits || isString(value)) return;
+    const cl = span.classList;
+    let { [name]: limit = Number.POSITIVE_INFINITY } = limits;
+    value > limit ? cl.add("marked") : cl.remove("marked");
   });
 };
 
