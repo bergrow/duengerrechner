@@ -209,6 +209,10 @@ tfoot th {
 .hidden {
   display: none;
 }
+.marked {
+  color: white;
+  background-color: red;
+}
 
 /* Modals */
 #water-modal select,
