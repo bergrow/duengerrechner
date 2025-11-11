@@ -76,7 +76,7 @@ const savedState = JSON.parse(localStorage.getItem("savedState")) || [];
 const saveState = () => {
   const jsonStr = JSON.stringify(savedState);
   localStorage.setItem("savedState", jsonStr);
-  document.querySelector("#export-button").href = `data:text/json;charset=utf-8,${encodeURIComponent(jsonStr)}`;
+  document.querySelector("#export-button").href = `data:application/json;charset=utf-8,${encodeURIComponent(jsonStr)}`;
 };
 
 const updateState = (row, id, dose) => {
@@ -102,6 +102,8 @@ const resetState = () => {
   localStorage.removeItem("savedState");
   location.reload();
 };
+
+const importState = () => {};
 
 const addFertilizer = (data) => {
   const id = 1000 + customFertData.length;
@@ -330,12 +332,29 @@ const updateChecklistRow = (row, data) => {
   uSpan.textContent = quality === 1 ? uSpan.dataset.original : "ml";
 };
 
+const updateChecklistMultiplier = (event) => {
+  document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
+};
+
 // Reset Modal
 const resetCustomFerts = (event) => {
   localStorage.removeItem("customFertData");
   location.reload();
 };
 
-const updateChecklistMultiplier = (event) => {
-  document.querySelectorAll("#checklist-table tbody tr").forEach((row) => updateChecklistRow(row));
+// Import Modal
+const saveImportModalForm = (event) => {
+  const data = saveModalForm(event);
+  const file = data.get("file");
+  const reader = new FileReader();
+  reader.onload = () => {
+    savedState.length = 0;
+    savedState.push(...JSON.parse(reader.result));
+    loadState();
+  };
+  reader.onerror = () => {
+    showMessage("Error reading the file. Please try again.", "error");
+  };
+  reader.readAsText(file);
+  toggleModal(event);
 };
