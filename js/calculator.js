@@ -73,7 +73,11 @@ const toggleTheme = (event) => {
 // Main Table
 const savedState = JSON.parse(localStorage.getItem("savedState")) || [];
 
-const saveState = () => localStorage.setItem("savedState", JSON.stringify(savedState));
+const saveState = () => {
+  const jsonStr = JSON.stringify(savedState);
+  localStorage.setItem("savedState", jsonStr);
+  document.querySelector("#export-button").href = `data:text/json;charset=utf-8,${encodeURIComponent(jsonStr)}`;
+};
 
 const updateState = (row, id, dose) => {
   savedState[row.rowIndex - 2] = { id: id, dose: dose };

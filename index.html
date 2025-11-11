@@ -79,7 +79,16 @@
             </button>
           </li>
           <li>
-            <button type="button" class="contrast outline" href="#" onclick="resetState()">Schema zurücksetzen</button>
+            <details class="dropdown">
+              <summary role="button" class="contrast outline">Schema</summary>
+              <ul>
+                <li><a href="#" data-target="import-modal" onclick="toggleModal(event)">Import</a></li>
+                <li>
+                  <a id="export-button" href="#" download="schema.json">Export</a>
+                </li>
+                <li><a href="#" onclick="resetState()">Zurücksetzen</a></li>
+              </ul>
+            </details>
           </li>
           <li>
             <details class="dropdown">
