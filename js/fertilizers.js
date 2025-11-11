@@ -4131,9 +4131,9 @@ const fertData = [
     b: 0,
     cu: 0,
     fe: 0,
-    mn: 0,
+    mn: 6.75,
     mo: 0,
-    zn: 0,
+    zn: 6.75,
     u: "ml",
   },
   {

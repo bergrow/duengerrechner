@@ -38,7 +38,7 @@
         <img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" />
         <hgroup>
           <h1>bergrows Düngerrechner</h1>
-          <p>Version 2.8 <small>(2025-10-25)</small></p>
+          <p>Version 2.9 <small>(2025-11-11)</small></p>
         </hgroup>
         <ul>
           <li>
@@ -79,12 +79,15 @@
             </button>
           </li>
           <li>
+            <button type="button" class="contrast outline" href="#" onclick="resetState()">Schema zurücksetzen</button>
+          </li>
+          <li>
             <details class="dropdown">
               <summary role="button" class="contrast outline">Einstellungen</summary>
               <ul>
                 <li><a href="#" data-target="new-fert-modal" onclick="toggleModal(event)">Neuer Dünger</a></li>
+                <li><a href="#" data-target="reset-modal" onclick="toggleModal(event)">Dünger löschen</a></li>
                 <li><a href="#" data-target="water-modal" onclick="toggleModal(event)">Wasserwerte</a></li>
-                <li><a href="#" data-target="reset-modal" onclick="toggleModal(event)">Daten löschen</a></li>
               </ul>
             </details>
           </li>
@@ -554,15 +557,12 @@
       </dialog>
       <dialog id="reset-modal">
         <article>
-          <h3>🗑️ Gespeicherte Daten löschen</h3>
-          <p>
-            Hierbei werden alle eingegebenen Daten, gespeicherte Wasserwerte und selbst angelegte Dünger unwiderruflich
-            gelöscht.
-          </p>
+          <h3>🗑️ Gespeicherte Dünger löschen</h3>
+          <p> Hierbei werden <b>alle</b> selbst angelegte Dünger <b>unwiderruflich</b> gelöscht. </p>
           <p><b>Möchtest du fortfahren?</b></p>
           <footer>
             <button data-target="reset-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
-            <button data-target="reset-modal" onclick="resetCalculator(event)">Löschen</button>
+            <button data-target="reset-modal" onclick="resetCustomFerts(event)">Löschen</button>
           </footer>
         </article>
       </dialog>
@@ -698,7 +698,7 @@
         </details>
         <p>Have fun and grow on! ✌️🏔️</p>
       </div>
-      <p>erstellt mit <b>bergrows Düngerrechner</b> v2.8</p>
+      <p>erstellt mit <b>bergrows Düngerrechner</b> v2.9</p>
     </footer>
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
     <noscript>

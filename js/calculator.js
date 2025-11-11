@@ -20,6 +20,7 @@ var waterLimits = {
   na: 115,
   cl: 140,
 };
+
 // Init
 const init = () => {
   populateWaterModalForm();
@@ -57,6 +58,9 @@ const init = () => {
     "TT.MM.JJJJ",
     new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
   );
+
+  // Load previous state
+  loadState();
 };
 
 const toggleTheme = (event) => {
@@ -67,6 +71,34 @@ const toggleTheme = (event) => {
 };
 
 // Main Table
+const savedState = JSON.parse(localStorage.getItem("savedState")) || [];
+
+const saveState = () => localStorage.setItem("savedState", JSON.stringify(savedState));
+
+const updateState = (row, id, dose) => {
+  savedState[row.rowIndex - 2] = { id: id, dose: dose };
+  saveState();
+};
+
+const loadState = () => {
+  if (savedState.length == 0) return;
+  if (savedState.length > 1) addFertRow(savedState.length - 1);
+  document.querySelectorAll("#fertilizer-table > tr").forEach((row, index) => {
+    const data = allFertData().find((item) => item.id == savedState[index].id);
+    if (data === undefined) return;
+    const rowSearchInput = row.querySelector("input[name=fertilizer]");
+    const doseInput = row.querySelector("input[name=dose]");
+    rowSearchInput.value = data.name;
+    doseInput.value = savedState[index].dose;
+    doseInput.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+};
+
+const resetState = () => {
+  localStorage.removeItem("savedState");
+  location.reload();
+};
+
 const addFertilizer = (data) => {
   const id = 1000 + customFertData.length;
   customFertData.push({ id: id, ...data });
@@ -103,6 +135,7 @@ const updateFertRow = (row, checklistRow) => {
   updateRow(row, { dose: `${formatValue(dose, 2, data.u)}`, ...data }, dose);
   updateChecklistRow(checklistRow, { dose, ...data });
   updateSums();
+  updateState(row, data.id, dose);
 };
 
 const removeFertRow = () => {
@@ -112,6 +145,8 @@ const removeFertRow = () => {
   if (tbody.querySelectorAll("tr").length === 1) rowButtons.querySelectorAll("button")[1].disabled = true;
   removeRow(document.querySelector("#checklist-table tbody"));
   updateSums();
+  savedState.pop();
+  saveState();
 };
 
 const updateWaterRow = (row) => {
@@ -254,7 +289,11 @@ const saveWaterModalForm = (event) => {
       waterData[convTable[k].to] = round(v * convTable[k].factor, 3);
     } else waterData[k] = v;
   }
-  localStorage.setItem("waterData", JSON.stringify(waterData));
+  if (Object.values(waterData).reduce((a, b) => a + b, 0) == 0) {
+    localStorage.removeItem("waterData");
+  } else {
+    localStorage.setItem("waterData", JSON.stringify(waterData));
+  }
   updateWaterRow(document.querySelector("#water-row"));
   toggleModal(event);
 };
@@ -288,8 +327,7 @@ const updateChecklistRow = (row, data) => {
 };
 
 // Reset Modal
-const resetCalculator = (event) => {
-  localStorage.removeItem("waterData");
+const resetCustomFerts = (event) => {
   localStorage.removeItem("customFertData");
   location.reload();
 };
