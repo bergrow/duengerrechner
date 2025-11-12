@@ -926,7 +926,7 @@ const fertData = [
   {
     id: 165,
     name: "Canna Coco B",
-    n: 7.7,
+    n: 8.8,
     "n-no3": 7.7,
     "n-nh4": 1.1,
     "n-nu": 0,
