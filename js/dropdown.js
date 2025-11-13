@@ -11,8 +11,25 @@ const noMatchListItem = () => {
   return item;
 };
 
+const attachDropdownEventHandlers = (dropdownInput, data) => {
+  dropdownInput.addEventListener("focus", (event) => {
+    event.currentTarget.select();
+    renderDropdownItems(event.currentTarget, data, event.currentTarget.value.toLowerCase());
+  });
+  dropdownInput.addEventListener("input", (event) =>
+    renderDropdownItems(event.currentTarget, data, event.currentTarget.value.toLowerCase())
+  );
+
+  dropdownInput.addEventListener("blur", (event) => {
+    const resultList = event.currentTarget.closest("div").querySelector("ul.dropdown-list");
+    setTimeout(() => {
+      if (resultList) resultList.classList.add("hidden");
+    }, 100);
+  });
+};
+
 const renderDropdownItems = (searchInput, data, query = "") => {
-  const resultList = searchInput.closest("div").querySelector("ul");
+  const resultList = searchInput.closest("div").querySelector("ul.dropdown-list");
   resultList.innerHTML = "";
   resultList.classList.remove("hidden");
 
