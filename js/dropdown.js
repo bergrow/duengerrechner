@@ -19,12 +19,11 @@ const attachDropdownEventHandlers = (dropdownInput, data) => {
   dropdownInput.addEventListener("input", (event) =>
     renderDropdownItems(event.currentTarget, data, event.currentTarget.value.toLowerCase())
   );
-
   dropdownInput.addEventListener("blur", (event) => {
     const resultList = event.currentTarget.closest("div").querySelector("ul.dropdown-list");
     setTimeout(() => {
       if (resultList) resultList.classList.add("hidden");
-    }, 100);
+    }, 150);
   });
 };
 
@@ -50,12 +49,3 @@ const renderDropdownItems = (searchInput, data, query = "") => {
     resultList.appendChild(li);
   });
 };
-
-// Hide dropdown when clicking outside
-document.addEventListener("click", (event) => {
-  if (!event.target.closest(".dropdown")) {
-    document.querySelectorAll(".dropdown-list").forEach((list) => {
-      list.classList.add("hidden");
-    });
-  }
-});
