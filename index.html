@@ -79,7 +79,16 @@
             </button>
           </li>
           <li>
-            <button type="button" class="contrast outline" href="#" onclick="resetState()">Schema zurücksetzen</button>
+            <details class="dropdown">
+              <summary role="button" class="contrast outline">Schema</summary>
+              <ul>
+                <li><a href="#" data-target="import-modal" onclick="toggleModal(event)">Import</a></li>
+                <li>
+                  <a id="export-button" href="#" download="schema.json">Export</a>
+                </li>
+                <li><a href="#" onclick="resetState()">Zurücksetzen</a></li>
+              </ul>
+            </details>
           </li>
           <li>
             <details class="dropdown">
@@ -563,6 +572,22 @@
           <footer>
             <button data-target="reset-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
             <button data-target="reset-modal" onclick="resetCustomFerts(event)">Löschen</button>
+          </footer>
+        </article>
+      </dialog>
+      <dialog id="import-modal">
+        <article>
+          <header>
+            <button aria-label="Close" rel="prev" data-target="import-modal" onclick="toggleModal(event)"></button>
+            <p><strong>📂 Schema importieren</strong></p>
+          </header>
+          <p>Hier kannst du ein gespeichertes Düngerschema wieder importieren.</p>
+          <form id="import-modal-form" data-target="import-modal" onsubmit="saveImportModalForm(event)">
+            <input name="file" type="file" accept="application/json" />
+          </form>
+          <footer>
+            <button data-target="import-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
+            <button form="import-modal-form">Importieren</button>
           </footer>
         </article>
       </dialog>
