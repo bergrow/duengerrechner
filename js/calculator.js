@@ -128,7 +128,7 @@ const loadState = () => {
 
 const resetState = () => {
   localStorage.removeItem("savedState");
-  location.reload();
+  location = location.pathname;
 };
 
 const addFertilizer = (data) => {
