@@ -127,6 +127,9 @@ div.dropdown {
 .dropdown-list li.highlighted {
   background-color: var(--pico-dropdown-hover-background-color);
 }
+.dropdown-list.keyboard-nav li:hover {
+  background-color: transparent;
+}
 .dropdown-list mark {
   padding: calc(var(--pico-form-element-spacing-vertical) * 0.5) 0;
 }

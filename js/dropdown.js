@@ -20,7 +20,11 @@ const selectDropdownItem = (searchInput, resultList, itemName) => {
 };
 
 const highlightDropdownItem = (items, index) => {
-  items.forEach((item) => item.classList.remove("highlighted"));
+  // Remove highlighted class from all items in the parent dropdown
+  const dropdown = items[0]?.closest("ul.dropdown-list");
+  if (dropdown) {
+    dropdown.querySelectorAll("li").forEach((item) => item.classList.remove("highlighted"));
+  }
   items[index].classList.add("highlighted");
   items[index].scrollIntoView({ block: "nearest" });
 };
@@ -53,12 +57,14 @@ const attachDropdownEventHandlers = (dropdownInput, data) => {
       case "ArrowDown":
         event.preventDefault();
         currentIndex = (currentIndex + 1) % items.length;
+        dropdown.classList.add("keyboard-nav");
         highlightDropdownItem(items, currentIndex);
         break;
 
       case "ArrowUp":
         event.preventDefault();
         currentIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
+        dropdown.classList.add("keyboard-nav");
         highlightDropdownItem(items, currentIndex);
         break;
 
@@ -104,9 +110,11 @@ const renderDropdownItems = (searchInput, data, query = "") => {
 
     // Sync .highlighted class with mouse hover for mixed keyboard/mouse navigation
     // This ensures Enter key selects the item under the mouse cursor
-    li.addEventListener("mouseenter", () => {
-      resultList.querySelectorAll("li").forEach((l) => l.classList.remove("highlighted"));
-      li.classList.add("highlighted");
+    li.addEventListener("mouseenter", (event) => {
+      const dropdown = event.target.closest("ul.dropdown-list");
+      dropdown.classList.remove("keyboard-nav");
+      dropdown.querySelectorAll("li").forEach((l) => l.classList.remove("highlighted"));
+      event.target.classList.add("highlighted");
     });
 
     resultList.appendChild(li);
