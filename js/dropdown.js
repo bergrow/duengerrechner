@@ -19,66 +19,27 @@ const selectDropdownItem = (searchInput, resultList, itemName) => {
   resultList.querySelectorAll("li").forEach((li) => li.classList.remove("highlighted"));
 };
 
-const renderDropdownItems = (searchInput, data, query = "") => {
-  const resultList = searchInput.closest("div").querySelector("ul.dropdown-list");
-  resultList.innerHTML = "";
-  resultList.classList.remove("hidden");
-  resultList.setAttribute("tabindex", "-1"); // Make dropdown non-focusable
-
-  const items = query === "" ? data : data.filter((item) => item.name.toLowerCase().includes(query));
-  if (items.length === 0) {
-    resultList.appendChild(noMatchListItem());
-    return;
-  }
-
-  items.forEach((item, index) => {
-    let li = document.createElement("li");
-    li.innerHTML = highlightMatch(item.name, query);
-    li.dataset.itemName = item.name;
-
-    li.addEventListener("click", () => {
-      selectDropdownItem(searchInput, resultList, item.name);
-    });
-
-    // Add hover effect
-    li.addEventListener("mouseenter", () => {
-      resultList.querySelectorAll("li").forEach((l) => l.classList.remove("highlighted"));
-      li.classList.add("highlighted");
-    });
-
-    resultList.appendChild(li);
-  });
-
-  // Highlight first item by default
-  if (items.length > 0) {
-    resultList.querySelector("li").classList.add("highlighted");
-  }
+const highlightDropdownItem = (items, index) => {
+  items.forEach((item) => item.classList.remove("highlighted"));
+  items[index].classList.add("highlighted");
+  items[index].scrollIntoView({ block: "nearest" });
 };
 
-/**
- * Attaches blur event handler to hide dropdown when input loses focus
- * @param {HTMLInputElement} inputElement - The input element to attach the handler to
- */
-const attachDropdownBlurHandler = (inputElement) => {
-  inputElement.addEventListener("blur", (event) => {
-    const input = event.currentTarget;
-    const dropdown = input.closest("div").querySelector("ul.dropdown-list");
-
-    // Small delay to allow click events on dropdown items to complete
+const attachDropdownEventHandlers = (dropdownInput, data) => {
+  dropdownInput.addEventListener("focus", (event) => {
+    event.currentTarget.select();
+    renderDropdownItems(event.currentTarget, data, event.currentTarget.value.toLowerCase());
+  });
+  dropdownInput.addEventListener("input", (event) =>
+    renderDropdownItems(event.currentTarget, data, event.currentTarget.value.toLowerCase())
+  );
+  dropdownInput.addEventListener("blur", (event) => {
+    const dropdown = event.currentTarget.closest("div").querySelector("ul.dropdown-list");
     setTimeout(() => {
-      if (dropdown) {
-        dropdown.classList.add("hidden");
-      }
+      if (dropdown) dropdown.classList.add("hidden");
     }, 150);
   });
-};
-
-/**
- * Attaches keyboard navigation handler for arrow keys, Enter, and Escape
- * @param {HTMLInputElement} inputElement - The input element to attach the handler to
- */
-const attachDropdownKeyboardHandler = (inputElement) => {
-  inputElement.addEventListener("keydown", (event) => {
+  dropdownInput.addEventListener("keydown", (event) => {
     const dropdown = event.currentTarget.closest("div").querySelector("ul.dropdown-list");
     if (!dropdown || dropdown.classList.contains("hidden")) return;
 
@@ -92,17 +53,13 @@ const attachDropdownKeyboardHandler = (inputElement) => {
       case "ArrowDown":
         event.preventDefault();
         currentIndex = (currentIndex + 1) % items.length;
-        items.forEach((item) => item.classList.remove("highlighted"));
-        items[currentIndex].classList.add("highlighted");
-        items[currentIndex].scrollIntoView({ block: "nearest" });
+        highlightDropdownItem(items, currentIndex);
         break;
 
       case "ArrowUp":
         event.preventDefault();
         currentIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
-        items.forEach((item) => item.classList.remove("highlighted"));
-        items[currentIndex].classList.add("highlighted");
-        items[currentIndex].scrollIntoView({ block: "nearest" });
+        highlightDropdownItem(items, currentIndex);
         break;
 
       case "Enter":
@@ -123,4 +80,40 @@ const attachDropdownKeyboardHandler = (inputElement) => {
         break;
     }
   });
+};
+
+const renderDropdownItems = (searchInput, data, query = "") => {
+  const resultList = searchInput.closest("div").querySelector("ul.dropdown-list");
+  resultList.innerHTML = "";
+  resultList.classList.remove("hidden");
+
+  const items = query === "" ? data : data.filter((item) => item.name.toLowerCase().includes(query));
+  if (items.length === 0) {
+    resultList.appendChild(noMatchListItem());
+    return;
+  }
+
+  items.forEach((item) => {
+    let li = document.createElement("li");
+    li.innerHTML = highlightMatch(item.name, query);
+    li.dataset.itemName = item.name;
+
+    li.addEventListener("click", () => {
+      selectDropdownItem(searchInput, resultList, item.name);
+    });
+
+    // Sync .highlighted class with mouse hover for mixed keyboard/mouse navigation
+    // This ensures Enter key selects the item under the mouse cursor
+    li.addEventListener("mouseenter", () => {
+      resultList.querySelectorAll("li").forEach((l) => l.classList.remove("highlighted"));
+      li.classList.add("highlighted");
+    });
+
+    resultList.appendChild(li);
+  });
+
+  // Highlight first item by default
+  if (items.length > 0) {
+    resultList.querySelector("li").classList.add("highlighted");
+  }
 };

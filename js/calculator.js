@@ -32,15 +32,7 @@ const init = () => {
   fertRow.addEventListener("input", (event) => updateFertRow(event.currentTarget, checklistRow));
 
   const fertRowSearchInput = fertRow.querySelector("input[name=fertilizer]");
-  fertRowSearchInput.addEventListener("focus", (event) => {
-    event.currentTarget.select();
-    renderDropdownItems(event.currentTarget, allFertData(), event.currentTarget.value.toLowerCase());
-  });
-  fertRowSearchInput.addEventListener("input", (event) => {
-    renderDropdownItems(event.currentTarget, allFertData(), event.currentTarget.value.toLowerCase());
-  });
-  attachDropdownBlurHandler(fertRowSearchInput);
-  attachDropdownKeyboardHandler(fertRowSearchInput);
+  attachDropdownEventHandlers(fertRowSearchInput, allFertData());
 
   const waterRow = document.querySelector("#water-row");
   waterRow.addEventListener("input", (event) => updateWaterRow(event.currentTarget));
@@ -122,15 +114,7 @@ const addFertRow = (numRows = 1) => {
     );
     const row = addRow(tbody, (event) => updateFertRow(event.currentTarget, checklistRow), rowButtons);
     const rowSearchInput = row.querySelector("input[name=fertilizer]");
-    rowSearchInput.addEventListener("focus", (event) => {
-      event.currentTarget.select();
-      renderDropdownItems(event.currentTarget, allFertData(), event.currentTarget.value.toLowerCase());
-    });
-    rowSearchInput.addEventListener("input", (event) => {
-      renderDropdownItems(event.currentTarget, allFertData(), event.currentTarget.value.toLowerCase());
-    });
-    attachDropdownBlurHandler(rowSearchInput);
-    attachDropdownKeyboardHandler(rowSearchInput);
+    attachDropdownEventHandlers(rowSearchInput, allFertData());
   }
   rowButtons.querySelectorAll("button")[1].disabled = false;
 };
