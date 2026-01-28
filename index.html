@@ -35,11 +35,17 @@
   <body onload="init()">
     <header class="main-header container-fluid">
       <nav>
-        <img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" />
-        <hgroup>
-          <h1>bergrows Düngerrechner</h1>
-          <p>Version 2.10 <small>(2025-11-17)</small></p>
-        </hgroup>
+        <ul>
+          <li><img style="width: 50px; margin: auto 10px" src="assets/images/icon.png" /></li>
+        </ul>
+        <ul>
+          <li>
+            <hgroup>
+              <h1>bergrows Düngerrechner</h1>
+              <p>Version 2.11 <small>(2026-01-28)</small></p>
+            </hgroup>
+          </li>
+        </ul>
         <ul>
           <li>
             <button
@@ -81,11 +87,10 @@
           <li>
             <details class="dropdown">
               <summary role="button" class="contrast outline">Schema</summary>
-              <ul>
+              <ul dir="rtl">
                 <li><a href="#" data-target="import-modal" onclick="toggleModal(event)">Import</a></li>
-                <li>
-                  <a id="export-button" href="#" download="schema.json">Export</a>
-                </li>
+                <li><a id="export-button" href="#" download="schema.json">Export</a></li>
+                <li><a href="#" data-target="share-modal" onclick="toggleModal(event)">Teilen</a></li>
                 <li><a href="#" onclick="resetState()">Zurücksetzen</a></li>
               </ul>
             </details>
@@ -93,7 +98,7 @@
           <li>
             <details class="dropdown">
               <summary role="button" class="contrast outline">Einstellungen</summary>
-              <ul>
+              <ul dir="rtl">
                 <li><a href="#" data-target="new-fert-modal" onclick="toggleModal(event)">Neuer Dünger</a></li>
                 <li><a href="#" data-target="reset-modal" onclick="toggleModal(event)">Dünger löschen</a></li>
                 <li><a href="#" data-target="water-modal" onclick="toggleModal(event)">Wasserwerte</a></li>
@@ -151,7 +156,7 @@
           <tbody id="fertilizer-table">
             <tr data-type="fertilizer">
               <td>
-                <div class="dropdown">
+                <div class="dropdown-div">
                   <input type="text" name="fertilizer" placeholder="Dünger auswählen" />
                   <ul class="dropdown-list hidden" tabindex="-1"></ul>
                 </div>
@@ -552,6 +557,7 @@
                     <option value="20">Stammlösung 5%</option>
                     <option value="10">Stammlösung 10%</option>
                     <option value="5">Stammlösung 20%</option>
+                    <option value="4">Stammlösung 25%</option>
                   </select>
                 </td>
                 <td><span name="quantity"></span> <span name="u"></span></td>
@@ -588,6 +594,21 @@
           <footer>
             <button data-target="import-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
             <button form="import-modal-form">Importieren</button>
+          </footer>
+        </article>
+      </dialog>
+      <dialog id="share-modal">
+        <article>
+          <header>
+            <button aria-label="Close" rel="prev" data-target="share-modal" onclick="toggleModal(event)"></button>
+            <p><strong>🔗 Schema teilen</strong></p>
+          </header>
+          <p>Über diesen Link kannst du dein erstelltes Schema mit anderen teilen:</p>
+          <form id="import-modal-form" data-target="import-modal" onsubmit="saveImportModalForm(event)">
+            <input id="share-link" type="text" readonly="true" />
+          </form>
+          <footer>
+            <button data-target="share-modal" onclick="toggleModal(event)">Fertig</button>
           </footer>
         </article>
       </dialog>
