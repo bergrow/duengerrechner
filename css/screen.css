@@ -226,6 +226,8 @@ tfoot th {
   color: var(--pico-muted-color);
   text-decoration: line-through;
 }
+
+/* Footer */
 #refs {
   counter-reset: list;
 }

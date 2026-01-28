@@ -89,9 +89,8 @@
               <summary role="button" class="contrast outline">Schema</summary>
               <ul dir="rtl">
                 <li><a href="#" data-target="import-modal" onclick="toggleModal(event)">Import</a></li>
-                <li>
-                  <a id="export-button" href="#" download="schema.json">Export</a>
-                </li>
+                <li><a id="export-button" href="#" download="schema.json">Export</a></li>
+                <li><a href="#" data-target="share-modal" onclick="toggleModal(event)">Teilen</a></li>
                 <li><a href="#" onclick="resetState()">Zurücksetzen</a></li>
               </ul>
             </details>
@@ -595,6 +594,21 @@
           <footer>
             <button data-target="import-modal" class="outline secondary" onclick="toggleModal(event)">Abbrechen</button>
             <button form="import-modal-form">Importieren</button>
+          </footer>
+        </article>
+      </dialog>
+      <dialog id="share-modal">
+        <article>
+          <header>
+            <button aria-label="Close" rel="prev" data-target="share-modal" onclick="toggleModal(event)"></button>
+            <p><strong>🔗 Schema teilen</strong></p>
+          </header>
+          <p>Über diesen Link kannst du dein erstelltes Schema mit anderen teilen:</p>
+          <form id="import-modal-form" data-target="import-modal" onsubmit="saveImportModalForm(event)">
+            <input id="share-link" type="text" readonly="true" />
+          </form>
+          <footer>
+            <button data-target="share-modal" onclick="toggleModal(event)">Fertig</button>
           </footer>
         </article>
       </dialog>
