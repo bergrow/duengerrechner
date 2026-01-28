@@ -42,9 +42,9 @@
   }
 }
 
-/* Fixes misalignment in FireFox */
-header .dropdown {
-  margin: 0 !important;
+/* Fixes Nav Dropdown full-width bug in FireFox */
+nav details.dropdown {
+  display: inline-block;
 }
 
 /* Header */
@@ -93,7 +93,7 @@ table {
   --pico-font-size: 0.875em;
 }
 
-div.dropdown {
+.dropdown-div {
   position: relative;
 }
 .dropdown-list {
