@@ -68,43 +68,14 @@ const toggleTheme = (event) => {
 };
 
 // Main Table
-const decodeSearchParam = (schemaSearchParam) => {
-  if (schemaSearchParam === null) return;
-  try {
-    const schema = atob(schemaSearchParam);
-    return schema
-      .split(";")
-      .map((item) => {
-        const [id, dose] = item.split(",").map((num) => Number(num));
-        if (isNaN(id) || id === undefined || isNaN(dose) || dose === undefined) return;
-        return { id: id, dose: dose };
-      })
-      .filter(Boolean);
-  } catch (error) {
-    return;
-  }
-};
-
-const encodeSearchParam = (schema) => {
-  const encoded = schema
-    .map((item) => {
-      return `${item.id},${item.dose}`;
-    })
-    .join(";");
-  return btoa(encoded);
-};
-
-const savedState =
-  decodeSearchParam(new URLSearchParams(window.location.search).get("s")) ||
-  JSON.parse(localStorage.getItem("savedState")) ||
-  [];
+const savedState = JSON.parse(localStorage.getItem("savedState")) || [];
 
 const saveState = () => {
   const jsonStr = JSON.stringify(savedState);
   localStorage.setItem("savedState", jsonStr);
   document.querySelector("#export-button").href = `data:application/json;charset=utf-8,${encodeURIComponent(jsonStr)}`;
-  const basePath = `${window.location.origin}${window.location.pathname}`;
-  document.querySelector("#share-link").value = `${basePath}?s=${encodeSearchParam(savedState)}`;
+  const sharePath = new URL("share", window.location.href);
+  document.querySelector("#share-link").value = `${sharePath}?${encodeSearchParam(savedState)}`;
 };
 
 const updateState = (row, id, dose) => {
