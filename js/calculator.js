@@ -53,7 +53,7 @@ const init = () => {
   const dateElem = document.querySelector("header > div > hgroup > p");
   dateElem.textContent = dateElem.textContent.replace(
     "TT.MM.JJJJ",
-    new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
+    new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }),
   );
 
   // Load previous state
@@ -68,43 +68,14 @@ const toggleTheme = (event) => {
 };
 
 // Main Table
-const decodeSearchParam = (schemaSearchParam) => {
-  if (schemaSearchParam === null) return;
-  try {
-    const schema = atob(schemaSearchParam);
-    return schema
-      .split(";")
-      .map((item) => {
-        const [id, dose] = item.split(",").map((num) => Number(num));
-        if (isNaN(id) || id === undefined || isNaN(dose) || dose === undefined) return;
-        return { id: id, dose: dose };
-      })
-      .filter(Boolean);
-  } catch (error) {
-    return;
-  }
-};
-
-const encodeSearchParam = (schema) => {
-  const encoded = schema
-    .map((item) => {
-      return `${item.id},${item.dose}`;
-    })
-    .join(";");
-  return btoa(encoded);
-};
-
-const savedState =
-  decodeSearchParam(new URLSearchParams(window.location.search).get("s")) ||
-  JSON.parse(localStorage.getItem("savedState")) ||
-  [];
+const savedState = JSON.parse(localStorage.getItem("savedState")) || [];
 
 const saveState = () => {
   const jsonStr = JSON.stringify(savedState);
   localStorage.setItem("savedState", jsonStr);
   document.querySelector("#export-button").href = `data:application/json;charset=utf-8,${encodeURIComponent(jsonStr)}`;
-  const basePath = `${window.location.origin}${window.location.pathname}`;
-  document.querySelector("#share-link").value = `${basePath}?s=${encodeSearchParam(savedState)}`;
+  const sharePath = new URL("share", window.location.href);
+  document.querySelector("#share-link").value = `${sharePath}?${encodeSearchParam(savedState)}`;
 };
 
 const updateState = (row, id, dose) => {
@@ -142,7 +113,7 @@ const addFertRow = (numRows = 1) => {
   const tbody = document.querySelector("#fertilizer-table");
   for (let i = 0; i < numRows; i++) {
     const checklistRow = addRow(document.querySelector("#checklist-table tbody"), (event) =>
-      updateChecklistRow(event.currentTarget)
+      updateChecklistRow(event.currentTarget),
     );
     const row = addRow(tbody, (event) => updateFertRow(event.currentTarget, checklistRow), rowButtons);
     const rowSearchInput = row.querySelector("input[name=fertilizer]");
@@ -194,13 +165,13 @@ const updateSums = () => {
     (name) => {
       let value = Array.from(
         document.querySelectorAll(`span[name=${name}]`),
-        (elem) => parseFloat(elem.dataset.value) || 0
+        (elem) => parseFloat(elem.dataset.value) || 0,
       ).reduce((a, c) => a + c, 0);
       if (name === "n") nSum = value;
       document.querySelector(`#${name}-sum`).textContent = ["n-no3", "n-nh4", "n-nu", "n-org"].includes(name)
         ? `${formatValue((value / nSum) * 100, 0, "%", "0")}`
         : formatValue(value, decimals(name));
-    }
+    },
   );
 };
 
@@ -251,8 +222,8 @@ const saveNewFertilizerForm = (event) => {
   let res = {};
   for (const [k, v] of data.entries()) {
     if (convTable[k]) {
-      res[convTable[k].to] = round(v * convTable[k].factor * 10 * density);
-    } else res[k] = isNaN(v) ? v : round(v * 10 * density);
+      res[convTable[k].to] = round(v * convTable[k].factor * 10 * density, 5);
+    } else res[k] = isNaN(v) ? v : round(v * 10 * density, 5);
   }
   addFertilizer(res);
   toggleModal(event);
@@ -332,7 +303,7 @@ const updateChecklistRow = (row, data) => {
   const quality = toFloat(qualSelect.selectedOptions[0].value);
   const checklistMultiplier = toFloat(
     document.querySelector("#checklist-modal input[name=checklist-multiplier]").value,
-    1
+    1,
   );
 
   // If checked off

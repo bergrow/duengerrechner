@@ -29,6 +29,7 @@
     <script src="js/table.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/fertilizers.js"></script>
+    <script src="js/share.js"></script>
     <script src="js/calculator.js"></script>
     <title>bergrows Düngerrechner</title>
   </head>
@@ -300,7 +301,7 @@
                 </em>
                 <em
                   data-stage="gen"
-                  data-tooltip="Quellen: [7], [10]; abh. von K- und Ca-Konzentrationen"
+                  data-tooltip="Quellen: [7], [10], [16]; abh. von K- und Ca-Konzentrationen"
                   class="hidden"
                 >
                   35 - 75
@@ -315,7 +316,9 @@
               <td class="micro hidden">1,2 - 4,0</td>
               <td class="micro hidden">0,6 - 1,0</td>
               <td class="micro hidden">0,01 - 0,03</td>
-              <td class="micro hidden">0,12 - 0,4</td>
+              <td class="micro hidden">
+                <em data-tooltip="Quelle: [17]">0,35</em>
+              </td>
               <td class="last-col"></td>
             </tr>
           </tfoot>
@@ -361,12 +364,12 @@
             <label><b>Mikro</b></label>
             <hr />
             <fieldset class="grid">
-              <label><b>B</b> (%)<input name="b" type="number" min="0" max="100" step="0.001" /></label>
-              <label><b>Cu</b> (%)<input name="cu" type="number" min="0" max="100" step="0.001" /></label>
-              <label><b>Fe</b> (%)<input name="fe" type="number" min="0" max="100" step="0.001" /></label>
-              <label><b>Mn</b> (%)<input name="mn" type="number" min="0" max="100" step="0.001" /></label>
-              <label><b>Mo</b> (%)<input name="mo" type="number" min="0" max="100" step="0.001" /></label>
-              <label><b>Zn</b> (%)<input name="zn" type="number" min="0" max="100" step="0.001" /></label>
+              <label><b>B</b> (%)<input name="b" type="number" min="0" max="100" step="0.0001" /></label>
+              <label><b>Cu</b> (%)<input name="cu" type="number" min="0" max="100" step="0.0001" /></label>
+              <label><b>Fe</b> (%)<input name="fe" type="number" min="0" max="100" step="0.0001" /></label>
+              <label><b>Mn</b> (%)<input name="mn" type="number" min="0" max="100" step="0.0001" /></label>
+              <label><b>Mo</b> (%)<input name="mo" type="number" min="0" max="100" step="0.0001" /></label>
+              <label><b>Zn</b> (%)<input name="zn" type="number" min="0" max="100" step="0.0001" /></label>
             </fieldset>
           </form>
           <footer>
@@ -558,6 +561,8 @@
                     <option value="10">Stammlösung 10%</option>
                     <option value="5">Stammlösung 20%</option>
                     <option value="4">Stammlösung 25%</option>
+                    <option value="4.4248">Athena metrisch</option>
+                    <option value="4.1727">Athena imperial</option>
                   </select>
                 </td>
                 <td><span name="quantity"></span> <span name="u"></span></td>
@@ -709,10 +714,24 @@
               doi:<a href="https://doi.org/10.3389/fpls.2022.1015652">10.3389/fpls.2022.1015652</a>
             </li>
             <li
-              >Saloner A, Bernstein, N.. Nitrogen Source Matters: High NH4/NO3 Ratio Reduces Cannabinoids, Terpenoids,
+              >Saloner A, Bernstein, N. Nitrogen Source Matters: High NH4/NO3 Ratio Reduces Cannabinoids, Terpenoids,
               and Yield in Medical Cannabis. <i>Front Plant Sci.</i> 2022;13:830224. doi:<a
                 href="https://doi.org/10.3389/fpls.2022.830224"
                 >10.3389/fpls.2022.830224</a
+              >
+            </li>
+            <li
+              >Morad D, Bernstein N. From deficiency to toxicity: Magnesium increases cannabinoid and terpene production
+              in cannabis plants. <i>J Cannabis Res</i>. 2025;7(1):103. doi:<a
+                href="https://doi.org/10.1186/s42238-025-00358-9"
+                >10.1186/s42238-025-00358-9</a
+              >
+            </li>
+            <li>
+              Shiponi S, Bernstein N. The power of zinc: excess and deficiency of Zn decrease cannabinoids in cannabis
+              without Zn toxicity concerns to consumers. <i>J Cannabis Res</i>. 2026;8(1):33. doi:<a
+                href="https://doi.org/10.1186/s42238-026-00404-0"
+                >10.1186/s42238-026-00404-0</a
               >
             </li>
           </ol>
