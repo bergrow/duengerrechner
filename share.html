@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="assets/favicon/site.webmanifest" />
+    <script src="js/share.js"></script>
+    <script>
+      const applySharedState = () => {
+        const state = decodeSearchParam(window.location.search.substring(1) || null);
+        if (state && state.length > 0) localStorage.setItem("savedState", JSON.stringify(state));
+        location.replace("index.html");
+      };
+    </script>
+    <title>bergrows Düngerrechner</title>
+  </head>
+  <body onload="applySharedState()">
+    <p>Weiterleitung zum Düngerrechner …</p>
+    <noscript>
+      <p>Bitte aktiviere JavaScript oder öffne den <a href="index.html">Düngerrechner</a> direkt.</p>
+    </noscript>
+  </body>
+</html>
